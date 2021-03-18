@@ -103,7 +103,7 @@ extern int main(void)
 
 
   /*Scheduler Init*/
-  SchM_Init();
+  SchM_Init(TaskArray);
   /* An embedded system shall not exit main function, otherwise bad things can happen. */
   while (1)
   {

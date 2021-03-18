@@ -77,3 +77,11 @@ void SchM_Task_100ms( void )
 { 
    contadortiempo=0; 
 }
+
+/* List of tasks to be executed by External Interrupt */
+void SchM_Task_Event( void )
+{ 
+   contadortiempo=0; 
+}
+
+

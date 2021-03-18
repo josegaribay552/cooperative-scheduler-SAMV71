@@ -321,7 +321,7 @@ void SchM_Scheduler(void)
 * \return   void
 * \todo     
 */
-void SchM_Init()
+void SchM_Init(SchMTaskType *TaskArray)
 {
     /* Init Global and local Task Scheduler variables */
     
@@ -336,7 +336,7 @@ void SchM_Init()
     
    
 
-    /*
+    
     //inicializacion de la estructura
     TaskArray[0].TaskPriority=5;
     TaskArray[0].TaskId=TASKS_1_MS;
@@ -361,6 +361,12 @@ void SchM_Init()
     TaskArray[5].TaskPriority=1;
     TaskArray[5].TaskId=TASKS_100_MS;
     TaskArray[5].TaskFncPtr=&SchM_Task_100ms;
+
+    TaskArray[6].TaskPriority=1;                    //TAREA QUE SE VA A ACTIVAR POR EVENTO
+    TaskArray[6].TaskId=TASKS_EVENT_MS;
+    TaskArray[6].TaskFncPtr=&SchM_Task_Event;
+    
+
     /*
 
     /* Start scheduler */

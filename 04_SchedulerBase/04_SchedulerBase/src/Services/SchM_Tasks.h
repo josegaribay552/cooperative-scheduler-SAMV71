@@ -37,5 +37,11 @@
 	/* List of tasks to be executed @ 100ms */
 	extern void SchM_Task_100ms( void );
 
+    /* List of tasks to be executed bu event */
+	extern void SchM_Task_Event( void );
+
+
+
+
 /*============================================================================*/
 #endif /* SCHM_TASKS */

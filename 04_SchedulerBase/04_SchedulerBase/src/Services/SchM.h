@@ -24,7 +24,7 @@
 	#include "SchM_Types.h"
 
 	/** Scheduler Initalization (arming) */
-	void SchM_Init();
+	void SchM_Init(SchMTaskType *TaskArray);
 
 	/** Scheduler kick-off function */
 	void SchM_Start(void);

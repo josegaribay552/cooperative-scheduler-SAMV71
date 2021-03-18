@@ -26,6 +26,7 @@ typedef enum
 	TASKS_10_MS,
 	TASKS_50_MS,
 	TASKS_100_MS,
+	TASKS_EVENT_MS,
 	TASK_NULL,
 } SchMTasksIdType;
 
