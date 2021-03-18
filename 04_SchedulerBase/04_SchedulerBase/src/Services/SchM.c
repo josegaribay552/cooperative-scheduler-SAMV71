@@ -365,7 +365,7 @@ void SchM_Init(SchMTaskType *TaskArray)
     TaskArray[6].TaskPriority=1;                    //TAREA QUE SE VA A ACTIVAR POR EVENTO
     TaskArray[6].TaskId=TASKS_EVENT_MS;
     TaskArray[6].TaskFncPtr=&SchM_Task_Event;
-    
+
 
     /*
 
@@ -402,7 +402,7 @@ void SysTick_Handler(void)
 {
 
     cuenta(); //cada llamada del systick llama la funcion para guardar el contador;
-    if (pfctnSysTick)
+    if (pfctnSysTick) //si es matyor a zero entonces
     {
         (*pfctnSysTick)();
     }
