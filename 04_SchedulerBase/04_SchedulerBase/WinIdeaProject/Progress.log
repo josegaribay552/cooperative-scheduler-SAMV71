@@ -1,0 +1,10 @@
+CONVERTING	C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\03_Timers_Solved.elf
+LOADING	C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\03_Timers_Solved.elf
+ANALYZING
+ANALYZING
+EMULATION	POD: Cortex (JTAG,SWD)   CPU: Cortex-M7
+DEBUG	PROTOCOL: SWD; RESET: SoC
+LOADING 	3996 bytes
+UMI INFO	Loading UMI monitor...
+PROGRAMMING	Atmel ATSAMV7 (2048 kB) (1 sectors)
+UMI INFO	Unloading UMI monitor...
