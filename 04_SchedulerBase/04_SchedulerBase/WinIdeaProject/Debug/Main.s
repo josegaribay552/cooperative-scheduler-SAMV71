@@ -128,45 +128,52 @@ ISR_COUNTER:
 ImSR:
 .LFB124:
 	.file 2 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Application\\Main.c"
-	.loc 2 50 0
+	.loc 2 55 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
-	@ link register save eliminated.
-	push	{r7}
-	.cfi_def_cfa_offset 4
-	.cfi_offset 7, -4
-	sub	sp, sp, #12
+	push	{r7, lr}
+	.cfi_def_cfa_offset 8
+	.cfi_offset 7, -8
+	.cfi_offset 14, -4
+	sub	sp, sp, #8
 	.cfi_def_cfa_offset 16
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 53 0
-	ldr	r3, .L8
+	.loc 2 58 0
+	ldr	r3, .L9
 	str	r3, [r7, #4]
-	.loc 2 55 0
+	.loc 2 60 0
 	ldr	r3, [r7, #4]
 	ldr	r3, [r3]
-	ldr	r2, .L8+4
+	ldr	r2, .L9+4
 	str	r3, [r2]
-	.loc 2 57 0
-	ldr	r3, .L8+8
+	.loc 2 62 0
+	ldr	r3, .L9+8
 	ldr	r3, [r3]
 	adds	r3, r3, #1
-	ldr	r2, .L8+8
+	ldr	r2, .L9+8
 	str	r3, [r2]
-	.loc 2 60 0
-	adds	r7, r7, #12
-	.cfi_def_cfa_offset 4
+	.loc 2 64 0
+	ldr	r3, .L9+8
+	ldr	r3, [r3]
+	cmp	r3, #2
+	bne	.L7
+	.loc 2 67 0
+	bl	limpiar
+	.loc 2 68 0
+	bl	SchM_ActivateTask
+.L7:
+	.loc 2 73 0
+	adds	r7, r7, #8
+	.cfi_def_cfa_offset 8
 	mov	sp, r7
 	.cfi_def_cfa_register 13
 	@ sp needed
-	ldr	r7, [sp], #4
-	.cfi_restore 7
-	.cfi_def_cfa_offset 0
-	bx	lr
-.L9:
+	pop	{r7, pc}
+.L10:
 	.align	2
-.L8:
+.L9:
 	.word	1074662988
 	.word	Dummy
 	.word	ISR_COUNTER
@@ -174,13 +181,49 @@ ImSR:
 .LFE124:
 	.size	ImSR, .-ImSR
 	.align	2
+	.global	limpiar
+	.thumb
+	.thumb_func
+	.type	limpiar, %function
+limpiar:
+.LFB125:
+	.loc 2 76 0
+	.cfi_startproc
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 1, uses_anonymous_args = 0
+	@ link register save eliminated.
+	push	{r7}
+	.cfi_def_cfa_offset 4
+	.cfi_offset 7, -4
+	add	r7, sp, #0
+	.cfi_def_cfa_register 7
+	.loc 2 77 0
+	ldr	r3, .L12
+	movs	r2, #1
+	str	r2, [r3]
+	.loc 2 78 0
+	mov	sp, r7
+	.cfi_def_cfa_register 13
+	@ sp needed
+	ldr	r7, [sp], #4
+	.cfi_restore 7
+	.cfi_def_cfa_offset 0
+	bx	lr
+.L13:
+	.align	2
+.L12:
+	.word	ISR_COUNTER
+	.cfi_endproc
+.LFE125:
+	.size	limpiar, .-limpiar
+	.align	2
 	.global	main
 	.thumb
 	.thumb_func
 	.type	main, %function
 main:
-.LFB125:
-	.loc 2 64 0
+.LFB126:
+	.loc 2 84 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 56
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -192,93 +235,93 @@ main:
 	.cfi_def_cfa_offset 64
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 66 0
-	ldr	r2, .L12
-	ldr	r3, .L12
+	.loc 2 86 0
+	ldr	r2, .L16
+	ldr	r3, .L16
 	ldr	r3, [r3]
 	orr	r3, r3, #32768
 	str	r3, [r2]
-	.loc 2 70 0
-	ldr	r3, .L12+4
-	ldr	r2, .L12+8
+	.loc 2 90 0
+	ldr	r3, .L16+4
+	ldr	r2, .L16+8
 	str	r2, [r3]
-	.loc 2 72 0
-	ldr	r3, .L12+4
+	.loc 2 92 0
+	ldr	r3, .L16+4
 	ldr	r3, [r3]
-	ldr	r2, .L12+4
+	ldr	r2, .L16+4
 	ldr	r2, [r2]
 	ldr	r2, [r2]
 	orr	r2, r2, #1024
 	str	r2, [r3]
-	.loc 2 75 0
-	ldr	r3, .L12+4
-	ldr	r2, .L12+12
+	.loc 2 95 0
+	ldr	r3, .L16+4
+	ldr	r2, .L16+12
 	str	r2, [r3]
-	.loc 2 76 0
-	ldr	r3, .L12+4
-	ldr	r3, [r3]
-	ldr	r2, .L12+4
-	ldr	r2, [r2]
-	ldr	r2, [r2]
-	orr	r2, r2, #512
-	str	r2, [r3]
-	.loc 2 79 0
-	ldr	r3, .L12+4
-	ldr	r2, .L12+16
-	str	r2, [r3]
-	.loc 2 80 0
-	ldr	r3, .L12+4
-	ldr	r3, [r3]
-	ldr	r2, .L12+4
-	ldr	r2, [r2]
-	ldr	r2, [r2]
-	orr	r2, r2, #512
-	str	r2, [r3]
-	.loc 2 83 0
-	ldr	r3, .L12+4
-	ldr	r2, .L12+20
-	str	r2, [r3]
-	.loc 2 84 0
-	ldr	r3, .L12+4
-	ldr	r3, [r3]
-	ldr	r2, .L12+4
-	ldr	r2, [r2]
-	ldr	r2, [r2]
-	orr	r2, r2, #512
-	str	r2, [r3]
-	.loc 2 87 0
-	ldr	r2, .L12+24
-	ldr	r3, .L12+24
-	ldr	r3, [r3]
-	orr	r3, r3, #512
-	str	r3, [r2]
-	.loc 2 88 0
-	ldr	r2, .L12+28
-	ldr	r3, .L12+28
-	ldr	r3, [r3]
-	orr	r3, r3, #512
-	str	r3, [r2]
-	.loc 2 89 0
-	ldr	r2, .L12+32
-	ldr	r3, .L12+32
-	ldr	r3, [r3]
-	orr	r3, r3, #512
-	str	r3, [r2]
-	.loc 2 90 0
-	ldr	r2, .L12+36
-	ldr	r3, .L12+36
-	ldr	r3, [r3]
-	orr	r3, r3, #512
-	str	r3, [r2]
-	.loc 2 91 0
-	ldr	r2, .L12+40
-	ldr	r3, .L12+40
-	ldr	r3, [r3]
-	orr	r3, r3, #512
-	str	r3, [r2]
-	.loc 2 93 0
-	bl	LedCtrl_Configure
 	.loc 2 96 0
+	ldr	r3, .L16+4
+	ldr	r3, [r3]
+	ldr	r2, .L16+4
+	ldr	r2, [r2]
+	ldr	r2, [r2]
+	orr	r2, r2, #512
+	str	r2, [r3]
+	.loc 2 99 0
+	ldr	r3, .L16+4
+	ldr	r2, .L16+16
+	str	r2, [r3]
+	.loc 2 100 0
+	ldr	r3, .L16+4
+	ldr	r3, [r3]
+	ldr	r2, .L16+4
+	ldr	r2, [r2]
+	ldr	r2, [r2]
+	orr	r2, r2, #512
+	str	r2, [r3]
+	.loc 2 103 0
+	ldr	r3, .L16+4
+	ldr	r2, .L16+20
+	str	r2, [r3]
+	.loc 2 104 0
+	ldr	r3, .L16+4
+	ldr	r3, [r3]
+	ldr	r2, .L16+4
+	ldr	r2, [r2]
+	ldr	r2, [r2]
+	orr	r2, r2, #512
+	str	r2, [r3]
+	.loc 2 107 0
+	ldr	r2, .L16+24
+	ldr	r3, .L16+24
+	ldr	r3, [r3]
+	orr	r3, r3, #512
+	str	r3, [r2]
+	.loc 2 108 0
+	ldr	r2, .L16+28
+	ldr	r3, .L16+28
+	ldr	r3, [r3]
+	orr	r3, r3, #512
+	str	r3, [r2]
+	.loc 2 109 0
+	ldr	r2, .L16+32
+	ldr	r3, .L16+32
+	ldr	r3, [r3]
+	orr	r3, r3, #512
+	str	r3, [r2]
+	.loc 2 110 0
+	ldr	r2, .L16+36
+	ldr	r3, .L16+36
+	ldr	r3, [r3]
+	orr	r3, r3, #512
+	str	r3, [r2]
+	.loc 2 111 0
+	ldr	r2, .L16+40
+	ldr	r3, .L16+40
+	ldr	r3, [r3]
+	orr	r3, r3, #512
+	str	r3, [r2]
+	.loc 2 113 0
+	bl	LedCtrl_Configure
+	.loc 2 116 0
 	movs	r0, #10
 	bl	NVIC_ClearPendingIRQ
 .LBB4:
@@ -291,17 +334,19 @@ main:
 	.thumb
 .LBE5:
 .LBE4:
-	.loc 2 100 0
+	.loc 2 120 0
 	movs	r0, #10
 	bl	NVIC_EnableIRQ
-	.loc 2 106 0
+	.loc 2 126 0
+	mov	r3, r7
+	mov	r0, r3
 	bl	SchM_Init
-.L11:
-	.loc 2 111 0 discriminator 1
-	b	.L11
-.L13:
+.L15:
+	.loc 2 131 0 discriminator 1
+	b	.L15
+.L17:
 	.align	2
-.L12:
+.L16:
 	.word	1074665556
 	.word	Register
 	.word	1074660880
@@ -314,7 +359,7 @@ main:
 	.word	1074663104
 	.word	1074663124
 	.cfi_endproc
-.LFE125:
+.LFE126:
 	.size	main, .-main
 .Letext0:
 	.file 4 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\LowLevel/device.h"
@@ -323,21 +368,21 @@ main:
 	.file 7 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services/SchM_Types.h"
 	.section	.debug_info,"",%progbits
 .Ldebug_info0:
-	.4byte	0x547
+	.4byte	0x55e
 	.2byte	0x4
 	.4byte	.Ldebug_abbrev0
 	.byte	0x4
 	.uleb128 0x1
-	.4byte	.LASF1658
-	.byte	0x1
 	.4byte	.LASF1659
+	.byte	0x1
 	.4byte	.LASF1660
+	.4byte	.LASF1661
 	.4byte	.Ltext0
 	.4byte	.Letext0-.Ltext0
 	.4byte	.Ldebug_line0
 	.4byte	.Ldebug_macro0
 	.uleb128 0x2
-	.4byte	.LASF1652
+	.4byte	.LASF1653
 	.byte	0x1
 	.byte	0x4
 	.byte	0xc
@@ -787,7 +832,7 @@ main:
 	.byte	0x1
 	.byte	0x7
 	.byte	0x16
-	.4byte	0x3fd
+	.4byte	0x403
 	.uleb128 0x3
 	.4byte	.LASF1638
 	.sleb128 0
@@ -809,57 +854,60 @@ main:
 	.uleb128 0x3
 	.4byte	.LASF1644
 	.sleb128 6
+	.uleb128 0x3
+	.4byte	.LASF1645
+	.sleb128 7
 	.byte	0
 	.uleb128 0x4
-	.4byte	.LASF1645
+	.4byte	.LASF1646
 	.byte	0x7
-	.byte	0x1e
+	.byte	0x1f
 	.4byte	0x3ca
 	.uleb128 0x13
 	.byte	0x8
 	.byte	0x7
-	.byte	0x2a
-	.4byte	0x435
-	.uleb128 0x14
-	.4byte	.LASF1646
-	.byte	0x7
-	.byte	0x2c
-	.4byte	0x262
-	.byte	0
+	.byte	0x2b
+	.4byte	0x43b
 	.uleb128 0x14
 	.4byte	.LASF1647
 	.byte	0x7
 	.byte	0x2d
-	.4byte	0x3fd
-	.byte	0x1
+	.4byte	0x262
+	.byte	0
 	.uleb128 0x14
 	.4byte	.LASF1648
 	.byte	0x7
 	.byte	0x2e
+	.4byte	0x403
+	.byte	0x1
+	.uleb128 0x14
+	.4byte	.LASF1649
+	.byte	0x7
+	.byte	0x2f
 	.4byte	0x3bf
 	.byte	0x4
 	.byte	0
 	.uleb128 0x4
-	.4byte	.LASF1649
+	.4byte	.LASF1650
 	.byte	0x7
-	.byte	0x2f
-	.4byte	0x408
+	.byte	0x30
+	.4byte	0x40e
 	.uleb128 0x15
-	.4byte	.LASF1661
+	.4byte	.LASF1662
 	.byte	0x3
 	.2byte	0x149
 	.byte	0x3
 	.uleb128 0x16
-	.4byte	.LASF1650
+	.4byte	.LASF1651
 	.byte	0x1
 	.2byte	0x683
 	.4byte	.LFB101
 	.4byte	.LFE101-.LFB101
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x46f
+	.4byte	0x475
 	.uleb128 0x17
-	.4byte	.LASF1652
+	.4byte	.LASF1653
 	.byte	0x1
 	.2byte	0x683
 	.4byte	0x1db
@@ -868,16 +916,16 @@ main:
 	.sleb128 -9
 	.byte	0
 	.uleb128 0x16
-	.4byte	.LASF1651
+	.4byte	.LASF1652
 	.byte	0x1
 	.2byte	0x6b8
 	.4byte	.LFB105
 	.4byte	.LFE105-.LFB105
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x495
+	.4byte	0x49b
 	.uleb128 0x17
-	.4byte	.LASF1652
+	.4byte	.LASF1653
 	.byte	0x1
 	.2byte	0x6b8
 	.4byte	0x1db
@@ -886,19 +934,19 @@ main:
 	.sleb128 -9
 	.byte	0
 	.uleb128 0x18
-	.4byte	.LASF1662
+	.4byte	.LASF1663
 	.byte	0x2
-	.byte	0x31
+	.byte	0x36
 	.4byte	.LFB124
 	.4byte	.LFE124-.LFB124
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x4b9
+	.4byte	0x4bf
 	.uleb128 0x19
-	.4byte	.LASF1653
+	.4byte	.LASF1654
 	.byte	0x2
-	.byte	0x34
-	.4byte	0x4b9
+	.byte	0x39
+	.4byte	0x4bf
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -12
@@ -907,65 +955,73 @@ main:
 	.byte	0x4
 	.4byte	0x246
 	.uleb128 0x1a
-	.4byte	.LASF1663
+	.4byte	.LASF1664
 	.byte	0x2
-	.byte	0x3f
-	.4byte	0x23f
+	.byte	0x4b
 	.4byte	.LFB125
 	.4byte	.LFE125-.LFB125
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x4f6
-	.uleb128 0x19
-	.4byte	.LASF1654
+	.uleb128 0x1b
+	.4byte	.LASF1665
 	.byte	0x2
-	.byte	0x66
-	.4byte	0x4f6
+	.byte	0x53
+	.4byte	0x23f
+	.4byte	.LFB126
+	.4byte	.LFE126-.LFB126
+	.uleb128 0x1
+	.byte	0x9c
+	.4byte	0x50d
+	.uleb128 0x19
+	.4byte	.LASF1655
+	.byte	0x2
+	.byte	0x7a
+	.4byte	0x50d
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -64
-	.uleb128 0x1b
-	.4byte	0x440
+	.uleb128 0x1c
+	.4byte	0x446
 	.4byte	.LBB4
 	.4byte	.LBE4-.LBB4
 	.byte	0x2
-	.byte	0x62
+	.byte	0x76
 	.byte	0
 	.uleb128 0xd
-	.4byte	0x435
-	.4byte	0x506
+	.4byte	0x43b
+	.4byte	0x51d
 	.uleb128 0xe
 	.4byte	0x24d
 	.byte	0x6
 	.byte	0
-	.uleb128 0x1c
-	.4byte	.LASF1655
-	.byte	0x1
-	.2byte	0x857
-	.4byte	0x512
-	.uleb128 0xf
-	.4byte	0x26d
 	.uleb128 0x1d
 	.4byte	.LASF1656
+	.byte	0x1
+	.2byte	0x857
+	.4byte	0x529
+	.uleb128 0xf
+	.4byte	0x26d
+	.uleb128 0x1e
+	.4byte	.LASF1657
 	.byte	0x2
 	.byte	0x1f
 	.4byte	0x246
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	ISR_COUNTER
-	.uleb128 0x1d
-	.4byte	.LASF1657
+	.uleb128 0x1e
+	.4byte	.LASF1658
 	.byte	0x2
 	.byte	0x20
 	.4byte	0x246
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	Dummy
-	.uleb128 0x1d
-	.4byte	.LASF1653
+	.uleb128 0x1e
+	.4byte	.LASF1654
 	.byte	0x2
 	.byte	0x21
-	.4byte	0x4b9
+	.4byte	0x4bf
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	Register
@@ -1284,7 +1340,7 @@ main:
 	.uleb128 0x6
 	.uleb128 0x40
 	.uleb128 0x18
-	.uleb128 0x2117
+	.uleb128 0x2116
 	.uleb128 0x19
 	.uleb128 0x1
 	.uleb128 0x13
@@ -1306,6 +1362,29 @@ main:
 	.byte	0
 	.byte	0
 	.uleb128 0x1a
+	.uleb128 0x2e
+	.byte	0
+	.uleb128 0x3f
+	.uleb128 0x19
+	.uleb128 0x3
+	.uleb128 0xe
+	.uleb128 0x3a
+	.uleb128 0xb
+	.uleb128 0x3b
+	.uleb128 0xb
+	.uleb128 0x27
+	.uleb128 0x19
+	.uleb128 0x11
+	.uleb128 0x1
+	.uleb128 0x12
+	.uleb128 0x6
+	.uleb128 0x40
+	.uleb128 0x18
+	.uleb128 0x2117
+	.uleb128 0x19
+	.byte	0
+	.byte	0
+	.uleb128 0x1b
 	.uleb128 0x2e
 	.byte	0x1
 	.uleb128 0x3f
@@ -1332,7 +1411,7 @@ main:
 	.uleb128 0x13
 	.byte	0
 	.byte	0
-	.uleb128 0x1b
+	.uleb128 0x1c
 	.uleb128 0x1d
 	.byte	0
 	.uleb128 0x31
@@ -1347,7 +1426,7 @@ main:
 	.uleb128 0xb
 	.byte	0
 	.byte	0
-	.uleb128 0x1c
+	.uleb128 0x1d
 	.uleb128 0x34
 	.byte	0
 	.uleb128 0x3
@@ -1364,7 +1443,7 @@ main:
 	.uleb128 0x19
 	.byte	0
 	.byte	0
-	.uleb128 0x1d
+	.uleb128 0x1e
 	.uleb128 0x34
 	.byte	0
 	.uleb128 0x3
@@ -2788,10 +2867,10 @@ main:
 	.uleb128 0x7
 	.byte	0x4
 	.byte	0x5
-	.uleb128 0x2e
+	.uleb128 0x31
 	.4byte	.LASF1535
 	.byte	0x5
-	.uleb128 0x2f
+	.uleb128 0x32
 	.4byte	.LASF1536
 	.byte	0x4
 	.byte	0
@@ -6629,7 +6708,7 @@ main:
 	.ascii	"__WCHAR_TYPE__ unsigned int\000"
 .LASF550:
 	.ascii	"__GNUCLIKE___TYPEOF 1\000"
-.LASF1648:
+.LASF1649:
 	.ascii	"TaskFncPtr\000"
 .LASF928:
 	.ascii	"INT32_C(x) __INT32_C(x)\000"
@@ -6778,8 +6857,8 @@ main:
 	.ascii	"SEEK_SET 0\000"
 .LASF81:
 	.ascii	"__UINTMAX_MAX__ 18446744073709551615ULL\000"
-.LASF49:
-	.ascii	"__INT_LEAST32_TYPE__ long int\000"
+.LASF557:
+	.ascii	"__GNUCLIKE_BUILTIN_VAALIST 1\000"
 .LASF151:
 	.ascii	"__DBL_HAS_INFINITY__ 1\000"
 .LASF445:
@@ -6947,6 +7026,8 @@ main:
 	.ascii	"ferror(p) __sferror(p)\000"
 .LASF23:
 	.ascii	"__BIGGEST_ALIGNMENT__ 8\000"
+.LASF1208:
+	.ascii	"ITM_IWR_ATVALIDM_Pos 0\000"
 .LASF43:
 	.ascii	"__UINT8_TYPE__ unsigned char\000"
 .LASF114:
@@ -7624,8 +7705,6 @@ main:
 	.ascii	"__DEC128_MAX_EXP__ 6145\000"
 .LASF251:
 	.ascii	"__LACCUM_MAX__ 0X7FFFFFFFFFFFFFFFP-31LK\000"
-.LASF597:
-	.ascii	"__returns_twice __attribute__((__returns_twice__))\000"
 .LASF749:
 	.ascii	"_TIMER_T_ unsigned long\000"
 .LASF1444:
@@ -7863,7 +7942,7 @@ main:
 	.ascii	"SCB_CCR_UNALIGN_TRP_Pos 3\000"
 .LASF516:
 	.ascii	"_SIZE_T_ \000"
-.LASF1662:
+.LASF1663:
 	.ascii	"ImSR\000"
 .LASF1105:
 	.ascii	"SCB_CCSIDR_ASSOCIATIVITY_Msk (0x3FFUL << SCB_CCSIDR"
@@ -8074,8 +8153,8 @@ main:
 	.ascii	"__FRACT_MAX__ 0X7FFFP-15R\000"
 .LASF485:
 	.ascii	"_DEFUN(name,arglist,args) name(args)\000"
-.LASF1399:
-	.ascii	"FPU_FPCCR_MONRDY_Msk (1UL << FPU_FPCCR_MONRDY_Pos)\000"
+.LASF597:
+	.ascii	"__returns_twice __attribute__((__returns_twice__))\000"
 .LASF714:
 	.ascii	"_REENT_MP_RESULT(ptr) ((ptr)->_result)\000"
 .LASF119:
@@ -8115,7 +8194,7 @@ main:
 	.ascii	"atile char *)__x - __offsetof(s, m));})\000"
 .LASF10:
 	.ascii	"__ATOMIC_RELEASE 3\000"
-.LASF1659:
+.LASF1660:
 	.ascii	"C:\\VScodeworkspace\\04_SchedulerBase\\04_Scheduler"
 	.ascii	"Base\\src\\Application\\Main.c\000"
 .LASF454:
@@ -8302,7 +8381,7 @@ main:
 	.ascii	"b_state)\000"
 .LASF927:
 	.ascii	"UINT16_C(x) __UINT16_C(x)\000"
-.LASF1650:
+.LASF1651:
 	.ascii	"NVIC_EnableIRQ\000"
 .LASF273:
 	.ascii	"__SQ_IBIT__ 0\000"
@@ -8470,6 +8549,8 @@ main:
 	.ascii	"MPU_RNR_REGION_Msk (0xFFUL << MPU_RNR_REGION_Pos)\000"
 .LASF473:
 	.ascii	"_PTR void *\000"
+.LASF1399:
+	.ascii	"FPU_FPCCR_MONRDY_Msk (1UL << FPU_FPCCR_MONRDY_Pos)\000"
 .LASF267:
 	.ascii	"__ULLACCUM_EPSILON__ 0x1P-32ULLK\000"
 .LASF22:
@@ -8586,7 +8667,7 @@ main:
 .LASF1185:
 	.ascii	"SysTick_CALIB_SKEW_Msk (1UL << SysTick_CALIB_SKEW_P"
 	.ascii	"os)\000"
-.LASF1656:
+.LASF1657:
 	.ascii	"ISR_COUNTER\000"
 .LASF978:
 	.ascii	"SCB_ICSR_PENDSTCLR_Pos 25\000"
@@ -8689,7 +8770,7 @@ main:
 	.ascii	"os)\000"
 .LASF478:
 	.ascii	"_SIGNED signed\000"
-.LASF1654:
+.LASF1655:
 	.ascii	"TaskArray\000"
 .LASF1181:
 	.ascii	"SysTick_VAL_CURRENT_Msk (0xFFFFFFUL << SysTick_VAL_"
@@ -8762,7 +8843,7 @@ main:
 	.ascii	"TPI_DEVID_MinBufSz_Pos 6\000"
 .LASF85:
 	.ascii	"__INT8_MAX__ 127\000"
-.LASF1661:
+.LASF1662:
 	.ascii	"__enable_irq\000"
 .LASF1380:
 	.ascii	"MPU_RASR_TEX_Pos 19\000"
@@ -8794,7 +8875,7 @@ main:
 	.ascii	"uint32_t\000"
 .LASF487:
 	.ascii	"_CAST_VOID (void)\000"
-.LASF1645:
+.LASF1646:
 	.ascii	"SchMTasksIdType\000"
 .LASF515:
 	.ascii	"__SIZE_T \000"
@@ -9183,7 +9264,7 @@ main:
 	.ascii	"ITM_TCR_TSPrescale_Pos 8\000"
 .LASF868:
 	.ascii	"__int_least64_t_defined 1\000"
-.LASF1652:
+.LASF1653:
 	.ascii	"IRQn\000"
 .LASF891:
 	.ascii	"INT_LEAST32_MIN (-__INT_LEAST32_MAX__ - 1)\000"
@@ -9234,7 +9315,7 @@ main:
 	.ascii	"TENA_Pos)\000"
 .LASF73:
 	.ascii	"__WCHAR_MAX__ 4294967295U\000"
-.LASF1647:
+.LASF1648:
 	.ascii	"TaskId\000"
 .LASF1603:
 	.ascii	"PWM1_IRQn\000"
@@ -9306,7 +9387,7 @@ main:
 	.ascii	"ID_XDMAC (58)\000"
 .LASF1070:
 	.ascii	"SCB_DFSR_EXTERNAL_Pos 4\000"
-.LASF1649:
+.LASF1650:
 	.ascii	"SchMTaskType\000"
 .LASF695:
 	.ascii	"_RAND48_ADD (0x000b)\000"
@@ -9334,8 +9415,6 @@ main:
 	.ascii	"__LLACCUM_FBIT__ 31\000"
 .LASF1346:
 	.ascii	"TPI_DEVID_AsynClkIn_Pos 5\000"
-.LASF557:
-	.ascii	"__GNUCLIKE_BUILTIN_VAALIST 1\000"
 .LASF717:
 	.ascii	"_REENT_MP_FREELIST(ptr) ((ptr)->_freelist)\000"
 .LASF576:
@@ -9521,13 +9600,13 @@ main:
 	.ascii	"SCB_DTCMCR_EN_Pos 0\000"
 .LASF916:
 	.ascii	"SIG_ATOMIC_MIN (-__STDINT_EXP(INT_MAX) - 1)\000"
-.LASF1655:
+.LASF1656:
 	.ascii	"ITM_RxBuffer\000"
 .LASF1256:
 	.ascii	"DWT_CPICNT_CPICNT_Pos 0\000"
 .LASF1512:
 	.ascii	"ITM ((ITM_Type *) ITM_BASE )\000"
-.LASF1658:
+.LASF1659:
 	.ascii	"GNU C 4.9.3 20150529 (release) [ARM/embedded-4_9-br"
 	.ascii	"anch revision 227977] -mcpu=cortex-m7 -mthumb -mflo"
 	.ascii	"at-abi=softfp -mfpu=fpv5-sp-d16 -g3 -std=c99 -fno-b"
@@ -9577,7 +9656,7 @@ main:
 	.ascii	"__UACCUM_MIN__ 0.0UK\000"
 .LASF1145:
 	.ascii	"SCB_AHBSCR_CTL_Msk (3UL << SCB_AHBPCR_CTL_Pos)\000"
-.LASF1660:
+.LASF1661:
 	.ascii	"C:\\\\VScodeworkspace\\\\04_SchedulerBase\\\\04_Sch"
 	.ascii	"edulerBase\\\\src\\\\Application\000"
 .LASF192:
@@ -9757,7 +9836,7 @@ main:
 	.ascii	"__COPYRIGHT(s) struct __hack\000"
 .LASF453:
 	.ascii	"_WIDE_ORIENT 1\000"
-.LASF1646:
+.LASF1647:
 	.ascii	"TaskPriority\000"
 .LASF845:
 	.ascii	"long\000"
@@ -9814,6 +9893,8 @@ main:
 	.ascii	"COUNT_Pos)\000"
 .LASF572:
 	.ascii	"__CONCAT(x,y) __CONCAT1(x,y)\000"
+.LASF1644:
+	.ascii	"TASKS_EVENT_MS\000"
 .LASF152:
 	.ascii	"__DBL_HAS_QUIET_NAN__ 1\000"
 .LASF156:
@@ -9878,9 +9959,9 @@ main:
 .LASF1351:
 	.ascii	"TPI_DEVTYPE_SubType_Msk (0xFUL << TPI_DEVTYPE_SubTy"
 	.ascii	"pe_Pos)\000"
-.LASF1657:
+.LASF1658:
 	.ascii	"Dummy\000"
-.LASF1653:
+.LASF1654:
 	.ascii	"Register\000"
 .LASF1553:
 	.ascii	"UART0_IRQn\000"
@@ -9900,7 +9981,7 @@ main:
 	.ascii	"__SIZEOF_FLOAT__ 4\000"
 .LASF925:
 	.ascii	"UINT8_C(x) __UINT8_C(x)\000"
-.LASF1663:
+.LASF1665:
 	.ascii	"main\000"
 .LASF1555:
 	.ascii	"PIOA_IRQn\000"
@@ -9964,6 +10045,8 @@ main:
 	.ascii	"SCB_CLIDR_LOUU_Pos 27\000"
 .LASF1146:
 	.ascii	"SCB_ABFSR_AXIMTYPE_Pos 8\000"
+.LASF1664:
+	.ascii	"limpiar\000"
 .LASF532:
 	.ascii	"__THROW \000"
 .LASF920:
@@ -9992,7 +10075,7 @@ main:
 	.ascii	"PIOB_IRQn\000"
 .LASF221:
 	.ascii	"__LLFRACT_MAX__ 0X7FFFFFFFFFFFFFFFP-63LLR\000"
-.LASF1651:
+.LASF1652:
 	.ascii	"NVIC_ClearPendingIRQ\000"
 .LASF811:
 	.ascii	"stdin (_REENT->_stdin)\000"
@@ -10032,7 +10115,7 @@ main:
 	.ascii	"ATAVSIZE_Pos)\000"
 .LASF3:
 	.ascii	"__GNUC__ 4\000"
-.LASF1644:
+.LASF1645:
 	.ascii	"TASK_NULL\000"
 .LASF1594:
 	.ascii	"TC8_IRQn\000"
@@ -10049,8 +10132,8 @@ main:
 	.ascii	"_bytecount_Pos)\000"
 .LASF1194:
 	.ascii	"ITM_TCR_GTSFREQ_Pos 10\000"
-.LASF1208:
-	.ascii	"ITM_IWR_ATVALIDM_Pos 0\000"
+.LASF49:
+	.ascii	"__INT_LEAST32_TYPE__ long int\000"
 .LASF766:
 	.ascii	"howmany(x,y) (((x)+((y)-1))/(y))\000"
 .LASF945:

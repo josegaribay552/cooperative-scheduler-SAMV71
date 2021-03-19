@@ -40,7 +40,7 @@
       
 	void SchM_SchedulePoint (void);
 
-	void SchM_ActivateTask (SchMTasksIdType Task);
+	void SchM_ActivateTask (void);
 
 
 

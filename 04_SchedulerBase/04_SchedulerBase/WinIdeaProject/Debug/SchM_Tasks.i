@@ -388,6 +388,9 @@
 
 
  extern void SchM_Task_100ms( void );
+
+
+ extern void SchM_Task_Event( void );
 # 24 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM_Tasks.c" 2
 
 # 1 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Application\\LedCtrl/Led_Ctrl.h" 1
@@ -5276,34 +5279,119 @@ void LedCtrl_Configure( void );
 void LedCtrl_BlinkingPattern(void);
 # 26 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM_Tasks.c" 2
 
+# 1 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM_Types.h" 1
+# 13 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM_Types.h"
+#define SCHM_TYPES 
 
 
 
-     int contadortiempo=0;
-# 41 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM_Tasks.c"
+
+typedef void (*SchM_CallbackType)(void);
+
+
+typedef enum
+{
+ TASKS_1_MS,
+ TASKS_2_MS_A,
+ TASKS_2_MS_B,
+ TASKS_10_MS,
+ TASKS_50_MS,
+ TASKS_100_MS,
+ TASKS_EVENT_MS,
+ TASK_NULL,
+} SchMTasksIdType;
+
+
+typedef enum
+{
+ SUSPENDED,
+ READY,
+ RUNNING,
+} SchMTaskStateType;
+
+
+
+typedef struct
+{
+ uint8_t TaskPriority;
+ SchMTasksIdType TaskId;
+ SchM_CallbackType TaskFncPtr;
+} SchMTaskType;
+
+
+
+typedef struct
+{
+ uint8_t TickCounter;
+ uint8_t TaskRunning;
+ uint8_t TaskOverload;
+ SchMTaskStateType TaskState;
+ SchMTaskType *TaskInfo;
+} SchMTaskCtrltype;
+# 28 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM_Tasks.c" 2
+
+
+
+
+
+
+int contadortiempo=0;
+extern SchMTaskCtrltype tarea[7];
+int seejecuto=0;
+
+
+
+    extern void SchM_SchedulePoint(void);
+
+
+
+
+
 void SchM_Task_1ms( void )
 {
-   for(int i=0;i<33;i++)
+     for(int i=0;i<60;i++)
      {
         contadortiempo++;
-    }
+     }
+     SchM_SchedulePoint();
+     tarea[6].TaskState=SUSPENDED;
+
 }
 
 
 void SchM_Task_2ms_A(void)
 { contadortiempo=0;
 
+      for(int i=0;i<60;i++)
+     {
+        contadortiempo++;
+     }
+     SchM_SchedulePoint();
+     tarea[6].TaskState=SUSPENDED;
+
 }
 
 
 void SchM_Task_2ms_B( void )
 { contadortiempo=0;
+         for(int i=0;i<60;i++)
+     {
+        contadortiempo++;
+     }
+     SchM_SchedulePoint();
+     tarea[6].TaskState=SUSPENDED;
 
 }
 
 
 void SchM_Task_10ms( void )
 { contadortiempo=0;
+           for(int i=0;i<60;i++)
+     {
+        contadortiempo++;
+     }
+     SchM_SchedulePoint();
+     tarea[6].TaskState=SUSPENDED;
 
 
 }
@@ -5311,12 +5399,34 @@ void SchM_Task_10ms( void )
 
 void SchM_Task_50ms( void )
 {
-   LedCtrl_BlinkingPattern();
+
    contadortiempo=0;
+        for(int i=0;i<60;i++)
+     {
+        contadortiempo++;
+     }
+     SchM_SchedulePoint();
+     tarea[6].TaskState=SUSPENDED;
 }
 
 
 void SchM_Task_100ms( void )
 {
    contadortiempo=0;
+    LedCtrl_BlinkingPattern();
+        for(int i=0;i<60;i++)
+     {
+        contadortiempo++;
+     }
+     SchM_SchedulePoint();
+     tarea[6].TaskState=SUSPENDED;
+}
+
+
+void SchM_Task_Event( void )
+{
+   contadortiempo=0;
+
+
+    seejecuto+=1;
 }

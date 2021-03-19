@@ -46,15 +46,22 @@
 SchM_CallbackType pfctnSysTick = (SchM_CallbackType)NULL;
 
 uint8_t SchM_Status;
+
 uint8_t SchM_Counter;
+
+
+SchMTaskCtrltype tarea[7];  //definicion de tipo de dato para scheduler
+extern SchMTaskType TaskArray[7]; //definicion externa de las tareas
+int RunningTaskPriority; //guarda el valor de la prioridad de la trarea en ejecucion
+
 
 SchMTasksIdType SchM_Task_ID_Activated;
 SchMTasksIdType SchM_Task_ID_Running;
 SchMTasksIdType SchM_Task_ID_Backup;
 
-uint8_t SchM_10ms_Counter;
-uint8_t SchM_50ms_Counter;
-uint8_t SchM_100ms_Counter;
+//uint8_t SchM_10ms_Counter;
+//uint8_t SchM_50ms_Counter;
+//uint8_t SchM_100ms_Counter;
 
 //VARIABLE GLOBAL DEFINIDA EN OTRO ARCHIVO
 extern unsigned int ISR_COUNTER;
@@ -102,18 +109,25 @@ void SchM_Callback(void)
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     if ((SchM_Counter & 0x01u) == 0x01u)   //si elvalor del contador operacion (AND) con 0000 0001 es igual a 0000 0001
     {
-        SchM_100ms_Counter++;
+        //tarea[5].TickCounter++;                      //tarea[5] para la tarea 1
+        tarea[5].TickCounter++;
         /*-- Allow 100 ms periodic tasks to be executed --*/
-        if (SchM_100ms_Counter >= 100u)                           //SI contador de la tarea de 100ms  igual a 100
+        //tarea[5].TickCounter>=100u
+        if (tarea[5].TickCounter >= 100u)                           //SI contador de la tarea de 100ms  igual a 100
         {
             /* Indicate that Task is Ready to be executed */
+            //tarea[5].TaskState=READY;
             SchM_Task_ID_Activated = TASKS_100_MS;               //activa la tarea de 100 MS
-            SchM_100ms_Counter = 0u;
+            //tarea[5].TickCounter=0u;
+            tarea[5].TickCounter = 0u;
         }
         /*-- Allow 1 ms periodic tasks to be executed --*/
         else
         {
+            //tarea[0].TaskState=READY
             SchM_Task_ID_Activated = TASKS_1_MS;                  //activa la tarea de 1 MS
+
+            
         }
     }
     else
@@ -127,17 +141,22 @@ void SchM_Callback(void)
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         if ((SchM_Counter & 0x02u) == 0x02u)     //si elvalor del contador operacion (AND) con 0000 0010 es igual a ultimos digitos con valor:10 
         {
-            SchM_50ms_Counter++;                                  
+             //tarea[4].TickCounter++;
+            tarea[4].TickCounter++;                                  
             /*-- Allow 50 ms periodic tasks to be executed --*/
-            if (SchM_50ms_Counter >= 25u)                           //SI contador de la tarea de 50 ms es igual a 25 veces por que se ajecuta cada 2ms
+             //  tarea[4].TickCounter >=25u
+            if (tarea[4].TickCounter >= 25u)                           //SI contador de la tarea de 50 ms es igual a 25 veces por que se ajecuta cada 2ms
             {
+                //tarea[4].TaskState=READY;
                 SchM_Task_ID_Activated = TASKS_50_MS;                  //entonces activa la tarea de 100 MS
-                SchM_50ms_Counter = 0u;
+                //  tarea[4].TickCounter=0u;
+                tarea[4].TickCounter = 0u;
             }
             /*-- Allow 2 ms group A periodic tasks to be executed --*/
             else
             {
                 SchM_Task_ID_Activated = TASKS_2_MS_A;                   //si no entonces activa la tarea de 2 MS
+                //tarea[1].TaskState=READY
             }
         }
         else
@@ -151,16 +170,20 @@ void SchM_Callback(void)
             /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
             if ((SchM_Counter & 0x03u) == 0x00u)              //si elvalor del contador operacion (AND) con 0000 0011 es igual a ulitmos digitos con 00 
             {
-                SchM_10ms_Counter++;
+                //tarea[3].TickCounter++;
+                tarea[3].TickCounter++;
                 /*-- Allow 10 ms periodic tasks to be executed --*/
-                if (SchM_10ms_Counter >= 5u)                       //SI contador de la tarea de 10 ms es igual a 5 veces por que se ajecuta cada 2ms
+                //tarea[3].TickCounter>=5u;
+                if (tarea[3].TickCounter >= 5u)                       //SI contador de la tarea de 10 ms es igual a 5 veces por que se ajecuta cada 2ms
                 {
+                    //tarea[3].TaskState=READY;
                     SchM_Task_ID_Activated = TASKS_10_MS;                  // entonces activa la tarea de 10 MS
-                    SchM_10ms_Counter = 0u;
+                    //tarea[3].TickCounter=0u;
+                    tarea[3].TickCounter = 0u;
                 }
                 /*-- Allow 2 ms group B periodic tasks to be executed --*/
                 else
-                {
+                {     //tarea[2].TaskState=READY;
                     SchM_Task_ID_Activated = TASKS_2_MS_B;                        // si no entonces activa la tarea de 2 MS
                 }
             }
@@ -229,14 +252,26 @@ void SchM_Scheduler(void)
     /*  b) 100ms thread (lowest priority tasks)                                     */
     /*  As any other thread on this scheduler, all tasks must be executed in <=500us*/
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    //if((tarea[0].Status==READY) || (tarea[5].Status==READY))
     if ((SchM_Task_ID_Activated == TASKS_1_MS) || (SchM_Task_ID_Activated == TASKS_100_MS))
     {
         /* Make a copy of scheduled task ID */
+        //SchM_Task_ID_Backup=tarea[0].Status==READY
         SchM_Task_ID_Backup = SchM_Task_ID_Activated;
-        SchM_Task_1ms();
+        
+        
+        //SchM_Task_1ms();
+        RunningTaskPriority=tarea[0].TaskInfo->TaskPriority; 
+        tarea[0].TaskInfo->TaskFncPtr();
+
+
+
+        //tarea[5].Status==READY
         if (SchM_Task_ID_Activated == TASKS_100_MS)
         {
-            SchM_Task_100ms();
+            //SchM_Task_100ms();
+            RunningTaskPriority=tarea[5].TaskInfo->TaskPriority;
+            tarea[5].TaskInfo->TaskFncPtr();
         }
         /* Verify that thread execution took less than 500 us */
         if (SchM_Task_ID_Backup == SchM_Task_ID_Activated)
@@ -261,10 +296,15 @@ void SchM_Scheduler(void)
         {
             /* Make a copy of scheduled task ID */
             SchM_Task_ID_Backup = SchM_Task_ID_Activated;
-            SchM_Task_2ms_A();
+            //SchM_Task_2ms_A();
+            RunningTaskPriority=tarea[1].TaskInfo->TaskPriority;     //guarda la prioridad de la tarea en ejecucion
+
+            tarea[1].TaskInfo->TaskFncPtr();
             if (SchM_Task_ID_Activated == TASKS_50_MS)
             {
-                SchM_Task_50ms();
+                RunningTaskPriority=tarea[4].TaskInfo->TaskPriority;   
+                //SchM_Task_50ms();
+                tarea[4].TaskInfo->TaskFncPtr();
             }
             /* Verify that thread execution took less than 500 us */
             if (SchM_Task_ID_Backup == SchM_Task_ID_Activated)
@@ -289,10 +329,15 @@ void SchM_Scheduler(void)
             {
                 /* Make a copy of scheduled task ID */
                 SchM_Task_ID_Backup = SchM_Task_ID_Activated;
-                SchM_Task_2ms_B();
+                RunningTaskPriority=tarea[2].TaskInfo->TaskPriority;
+                //SchM_Task_2ms_B();
+                tarea[2].TaskInfo->TaskFncPtr();
+
                 if (SchM_Task_ID_Activated == TASKS_10_MS)
                 {
-                    SchM_Task_10ms();
+                    RunningTaskPriority=tarea[3].TaskInfo->TaskPriority;
+                    //SchM_Task_10ms();
+                    tarea[3].TaskInfo->TaskFncPtr();
                 }
                 /* Verify that thread execution took less than 500 us */
                 if (SchM_Task_ID_Backup == SchM_Task_ID_Activated)
@@ -329,11 +374,28 @@ void SchM_Init(SchMTaskType *TaskArray)
     SchM_Task_ID_Activated = TASK_NULL;
     SchM_Task_ID_Running = TASK_NULL;
     SchM_Task_ID_Backup = TASK_NULL;
-    SchM_10ms_Counter = 0u;
-    SchM_50ms_Counter = 0u;
-    SchM_100ms_Counter = 0u;
+   // SchM_10ms_Counter = 0u;
+   // SchM_50ms_Counter = 0u;
+   // SchM_100ms_Counter = 0u;
     SchM_Status = SCHM_TASK_SCHEDULER_INIT;
-    
+
+
+     //inicializacion de contadores 
+    tarea[0].TickCounter=0;   //inicializacion de contador de tarea de 1ms
+    tarea[1].TickCounter=0;   //inicializacion de contador de tarea de 2ms_A
+    tarea[2].TickCounter=0;   //inicializacion de contador de tarea de 2ms_B
+    tarea[3].TickCounter=0;   //inicializacion de contador de tarea de 10 ms
+    tarea[4].TickCounter=0;   //inicializacion de contador de tarea de 50 ms
+    tarea[5].TickCounter=0;   //inicializacion de contador de tarea de 100 ms
+
+    tarea[0].TaskInfo=&TaskArray[0]; //inicializacion de apuntador a tarea de 1ms
+    tarea[1].TaskInfo=&TaskArray[1];  //inicializacion de apuntador a tarea de 2ms_A
+    tarea[2].TaskInfo=&TaskArray[2];  //inicializacion de apuntador a tarea de 2ms_B
+    tarea[3].TaskInfo=&TaskArray[3];  //inicializacion de apuntador a tarea de 10ms
+    tarea[4].TaskInfo=&TaskArray[4];  //inicializacion de apuntador a tarea de 50ms
+    tarea[5].TaskInfo=&TaskArray[5];  //inicializacion de apuntador a tarea de 100ms
+
+   //tarea[0].TaskInfo->TaskFncPtr();
    
 
     
@@ -362,14 +424,12 @@ void SchM_Init(SchMTaskType *TaskArray)
     TaskArray[5].TaskId=TASKS_100_MS;
     TaskArray[5].TaskFncPtr=&SchM_Task_100ms;
 
-    TaskArray[6].TaskPriority=1;                    //TAREA QUE SE VA A ACTIVAR POR EVENTO
+    TaskArray[6].TaskPriority=5;                    //TAREA QUE SE VA A ACTIVAR POR EVENTO
     TaskArray[6].TaskId=TASKS_EVENT_MS;
     TaskArray[6].TaskFncPtr=&SchM_Task_Event;
 
-
-    /*
-
-    /* Start scheduler */
+    tarea[6].TaskState=SUSPENDED;
+  
     SchM_Start();
 }
 
@@ -421,8 +481,15 @@ void SysTick_Handler(void)
 /* SchM_SchedulePoint */
 void SchM_SchedulePoint (void)
 {
+      //si la tarea que esta corriendo es de menor prioridad a la que esta en ready por evento dejar la tarea corriendo en suspend
+      if((tarea[6].TaskState==READY) && (tarea[6].TaskInfo[6].TaskPriority >  RunningTaskPriority))
+      {
+          tarea[6].TaskState=RUNNING;            //SE LE CAMBIA EL ESTADO A LA TAREA POR EVENTO
+          tarea[6].TaskInfo->TaskFncPtr();   //ejecuta la tarea por evento
+         
 
- 
+      }
+
 }
 
 /***************************************************************************************************/
@@ -436,8 +503,10 @@ void SchM_SchedulePoint (void)
 * \todo
 */
 /* SchM_ActivateTask*/
-void SchM_ActivateTask (SchMTasksIdType TaskId)
+void SchM_ActivateTask (void)
 {
+      if(tarea[6].TaskState==SUSPENDED)
+     tarea[6].TaskState=READY;
 
  
 }

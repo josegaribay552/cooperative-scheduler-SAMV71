@@ -155,12 +155,11 @@ pfctnSysTick:
 	.space	4
 	.comm	SchM_Status,1,1
 	.comm	SchM_Counter,1,1
+	.comm	tarea,56,4
+	.comm	RunningTaskPriority,4,4
 	.comm	SchM_Task_ID_Activated,1,1
 	.comm	SchM_Task_ID_Running,1,1
 	.comm	SchM_Task_ID_Backup,1,1
-	.comm	SchM_10ms_Counter,1,1
-	.comm	SchM_50ms_Counter,1,1
-	.comm	SchM_100ms_Counter,1,1
 	.global	contador
 	.align	2
 	.type	contador, %object
@@ -176,7 +175,7 @@ contador:
 cuenta:
 .LFB124:
 	.file 2 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
-	.loc 2 65 0
+	.loc 2 72 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -186,12 +185,12 @@ cuenta:
 	.cfi_offset 7, -4
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 66 0
+	.loc 2 73 0
 	ldr	r3, .L12
 	ldr	r3, [r3]
 	ldr	r2, .L12+4
 	str	r3, [r2]
-	.loc 2 67 0
+	.loc 2 74 0
 	mov	sp, r7
 	.cfi_def_cfa_register 13
 	@ sp needed
@@ -214,7 +213,7 @@ cuenta:
 	.type	SchM_Callback, %function
 SchM_Callback:
 .LFB125:
-	.loc 2 92 0
+	.loc 2 99 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -224,115 +223,115 @@ SchM_Callback:
 	.cfi_offset 7, -4
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 94 0
+	.loc 2 101 0
 	ldr	r3, .L23
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	adds	r3, r3, #1
 	uxtb	r2, r3
 	ldr	r3, .L23
 	strb	r2, [r3]
-	.loc 2 103 0
+	.loc 2 110 0
 	ldr	r3, .L23
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	and	r3, r3, #1
 	cmp	r3, #0
 	beq	.L15
-	.loc 2 105 0
+	.loc 2 113 0
 	ldr	r3, .L23+4
-	ldrb	r3, [r3]	@ zero_extendqisi2
+	ldrb	r3, [r3, #40]	@ zero_extendqisi2
 	adds	r3, r3, #1
 	uxtb	r2, r3
 	ldr	r3, .L23+4
-	strb	r2, [r3]
-	.loc 2 107 0
+	strb	r2, [r3, #40]
+	.loc 2 116 0
 	ldr	r3, .L23+4
-	ldrb	r3, [r3]	@ zero_extendqisi2
+	ldrb	r3, [r3, #40]	@ zero_extendqisi2
 	cmp	r3, #99
 	bls	.L16
-	.loc 2 110 0
+	.loc 2 120 0
 	ldr	r3, .L23+8
 	movs	r2, #5
 	strb	r2, [r3]
-	.loc 2 111 0
+	.loc 2 122 0
 	ldr	r3, .L23+4
 	movs	r2, #0
-	strb	r2, [r3]
+	strb	r2, [r3, #40]
 	b	.L14
 .L16:
-	.loc 2 116 0
+	.loc 2 128 0
 	ldr	r3, .L23+8
 	movs	r2, #0
 	strb	r2, [r3]
 	b	.L14
 .L15:
-	.loc 2 128 0
+	.loc 2 142 0
 	ldr	r3, .L23
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	and	r3, r3, #2
 	cmp	r3, #0
 	beq	.L19
-	.loc 2 130 0
-	ldr	r3, .L23+12
-	ldrb	r3, [r3]	@ zero_extendqisi2
+	.loc 2 145 0
+	ldr	r3, .L23+4
+	ldrb	r3, [r3, #32]	@ zero_extendqisi2
 	adds	r3, r3, #1
 	uxtb	r2, r3
-	ldr	r3, .L23+12
-	strb	r2, [r3]
-	.loc 2 132 0
-	ldr	r3, .L23+12
-	ldrb	r3, [r3]	@ zero_extendqisi2
+	ldr	r3, .L23+4
+	strb	r2, [r3, #32]
+	.loc 2 148 0
+	ldr	r3, .L23+4
+	ldrb	r3, [r3, #32]	@ zero_extendqisi2
 	cmp	r3, #24
 	bls	.L20
-	.loc 2 134 0
+	.loc 2 151 0
 	ldr	r3, .L23+8
 	movs	r2, #4
 	strb	r2, [r3]
-	.loc 2 135 0
-	ldr	r3, .L23+12
+	.loc 2 153 0
+	ldr	r3, .L23+4
 	movs	r2, #0
-	strb	r2, [r3]
+	strb	r2, [r3, #32]
 	b	.L14
 .L20:
-	.loc 2 140 0
+	.loc 2 158 0
 	ldr	r3, .L23+8
 	movs	r2, #1
 	strb	r2, [r3]
 	b	.L14
 .L19:
-	.loc 2 152 0
+	.loc 2 171 0
 	ldr	r3, .L23
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	and	r3, r3, #3
 	cmp	r3, #0
 	bne	.L14
-	.loc 2 154 0
-	ldr	r3, .L23+16
-	ldrb	r3, [r3]	@ zero_extendqisi2
+	.loc 2 174 0
+	ldr	r3, .L23+4
+	ldrb	r3, [r3, #24]	@ zero_extendqisi2
 	adds	r3, r3, #1
 	uxtb	r2, r3
-	ldr	r3, .L23+16
-	strb	r2, [r3]
-	.loc 2 156 0
-	ldr	r3, .L23+16
-	ldrb	r3, [r3]	@ zero_extendqisi2
+	ldr	r3, .L23+4
+	strb	r2, [r3, #24]
+	.loc 2 177 0
+	ldr	r3, .L23+4
+	ldrb	r3, [r3, #24]	@ zero_extendqisi2
 	cmp	r3, #4
 	bls	.L22
-	.loc 2 158 0
+	.loc 2 180 0
 	ldr	r3, .L23+8
 	movs	r2, #3
 	strb	r2, [r3]
-	.loc 2 159 0
-	ldr	r3, .L23+16
+	.loc 2 182 0
+	ldr	r3, .L23+4
 	movs	r2, #0
-	strb	r2, [r3]
+	strb	r2, [r3, #24]
 	b	.L14
 .L22:
-	.loc 2 164 0
+	.loc 2 187 0
 	ldr	r3, .L23+8
 	movs	r2, #2
 	strb	r2, [r3]
 .L14:
-	.loc 2 169 0
+	.loc 2 192 0
 	mov	sp, r7
 	.cfi_def_cfa_register 13
 	@ sp needed
@@ -344,10 +343,8 @@ SchM_Callback:
 	.align	2
 .L23:
 	.word	SchM_Counter
-	.word	SchM_100ms_Counter
+	.word	tarea
 	.word	SchM_Task_ID_Activated
-	.word	SchM_50ms_Counter
-	.word	SchM_10ms_Counter
 	.cfi_endproc
 .LFE125:
 	.size	SchM_Callback, .-SchM_Callback
@@ -358,7 +355,7 @@ SchM_Callback:
 	.type	SysTick_init, %function
 SysTick_init:
 .LFB126:
-	.loc 2 182 0
+	.loc 2 205 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -372,11 +369,11 @@ SysTick_init:
 	.cfi_def_cfa_register 7
 	str	r0, [r7, #4]
 	str	r1, [r7]
-	.loc 2 183 0
+	.loc 2 206 0
 	ldr	r2, .L27
 	ldr	r3, [r7]
 	str	r3, [r2]
-	.loc 2 184 0
+	.loc 2 207 0
 	ldr	r2, .L27+4
 	ldr	r3, [r7, #4]
 	udiv	r3, r2, r3
@@ -384,7 +381,7 @@ SysTick_init:
 	bl	SysTick_Config
 	mov	r3, r0
 	uxtb	r3, r3
-	.loc 2 185 0
+	.loc 2 208 0
 	mov	r0, r3
 	adds	r7, r7, #8
 	.cfi_def_cfa_offset 8
@@ -407,7 +404,7 @@ SysTick_init:
 	.type	SchM_Start, %function
 SchM_Start:
 .LFB127:
-	.loc 2 199 0
+	.loc 2 222 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -417,7 +414,7 @@ SchM_Start:
 	.cfi_offset 14, -4
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 200 0
+	.loc 2 223 0
 	mov	r0, #2000
 	ldr	r1, .L33
 	bl	SysTick_init
@@ -425,17 +422,17 @@ SchM_Start:
 	cmp	r3, #0
 	beq	.L30
 .L31:
-	.loc 2 203 0 discriminator 1
+	.loc 2 226 0 discriminator 1
 	b	.L31
 .L30:
-	.loc 2 205 0
+	.loc 2 228 0
 	ldr	r3, .L33+4
 	movs	r2, #1
 	strb	r2, [r3]
 .L32:
-	.loc 2 209 0 discriminator 1
+	.loc 2 232 0 discriminator 1
 	bl	SchM_Scheduler
-	.loc 2 210 0 discriminator 1
+	.loc 2 233 0 discriminator 1
 	b	.L32
 .L34:
 	.align	2
@@ -452,7 +449,7 @@ SchM_Start:
 	.type	SchM_Scheduler, %function
 SchM_Scheduler:
 .LFB128:
-	.loc 2 225 0
+	.loc 2 248 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -462,151 +459,213 @@ SchM_Scheduler:
 	.cfi_offset 14, -4
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 232 0
+	.loc 2 256 0
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r3, #0
 	beq	.L36
-	.loc 2 232 0 is_stmt 0 discriminator 1
+	.loc 2 256 0 is_stmt 0 discriminator 1
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r3, #5
 	bne	.L37
 .L36:
-	.loc 2 235 0 is_stmt 1
+	.loc 2 260 0 is_stmt 1
 	ldr	r3, .L50
 	ldrb	r2, [r3]	@ zero_extendqisi2
 	ldr	r3, .L50+4
 	strb	r2, [r3]
-	.loc 2 236 0
-	bl	SchM_Task_1ms
-	.loc 2 237 0
+	.loc 2 264 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #4]
+	ldrb	r3, [r3]	@ zero_extendqisi2
+	mov	r2, r3
+	ldr	r3, .L50+12
+	str	r2, [r3]
+	.loc 2 265 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #4]
+	ldr	r3, [r3, #4]
+	blx	r3
+	.loc 2 270 0
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r3, #5
 	bne	.L38
-	.loc 2 239 0
-	bl	SchM_Task_100ms
+	.loc 2 273 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #44]
+	ldrb	r3, [r3]	@ zero_extendqisi2
+	mov	r2, r3
+	ldr	r3, .L50+12
+	str	r2, [r3]
+	.loc 2 274 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #44]
+	ldr	r3, [r3, #4]
+	blx	r3
 .L38:
-	.loc 2 242 0
+	.loc 2 277 0
 	ldr	r3, .L50+4
 	ldrb	r2, [r3]	@ zero_extendqisi2
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r2, r3
 	bne	.L39
-	.loc 2 245 0
+	.loc 2 280 0
 	ldr	r3, .L50
-	movs	r2, #6
+	movs	r2, #7
 	strb	r2, [r3]
-	.loc 2 242 0
+	.loc 2 277 0
 	b	.L35
 .L39:
-	.loc 2 249 0
-	ldr	r3, .L50+8
+	.loc 2 284 0
+	ldr	r3, .L50+16
 	movs	r2, #2
 	strb	r2, [r3]
-	.loc 2 242 0
+	.loc 2 277 0
 	b	.L35
 .L37:
-	.loc 2 260 0
+	.loc 2 295 0
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r3, #1
 	beq	.L42
-	.loc 2 260 0 is_stmt 0 discriminator 1
+	.loc 2 295 0 is_stmt 0 discriminator 1
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r3, #4
 	bne	.L43
 .L42:
-	.loc 2 263 0 is_stmt 1
+	.loc 2 298 0 is_stmt 1
 	ldr	r3, .L50
 	ldrb	r2, [r3]	@ zero_extendqisi2
 	ldr	r3, .L50+4
 	strb	r2, [r3]
-	.loc 2 264 0
-	bl	SchM_Task_2ms_A
-	.loc 2 265 0
+	.loc 2 300 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #12]
+	ldrb	r3, [r3]	@ zero_extendqisi2
+	mov	r2, r3
+	ldr	r3, .L50+12
+	str	r2, [r3]
+	.loc 2 302 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #12]
+	ldr	r3, [r3, #4]
+	blx	r3
+	.loc 2 303 0
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r3, #4
 	bne	.L44
-	.loc 2 267 0
-	bl	SchM_Task_50ms
+	.loc 2 305 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #36]
+	ldrb	r3, [r3]	@ zero_extendqisi2
+	mov	r2, r3
+	ldr	r3, .L50+12
+	str	r2, [r3]
+	.loc 2 307 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #36]
+	ldr	r3, [r3, #4]
+	blx	r3
 .L44:
-	.loc 2 270 0
+	.loc 2 310 0
 	ldr	r3, .L50+4
 	ldrb	r2, [r3]	@ zero_extendqisi2
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r2, r3
 	bne	.L45
-	.loc 2 273 0
+	.loc 2 313 0
 	ldr	r3, .L50
-	movs	r2, #6
+	movs	r2, #7
 	strb	r2, [r3]
-	.loc 2 270 0
+	.loc 2 310 0
 	b	.L35
 .L45:
-	.loc 2 277 0
-	ldr	r3, .L50+8
+	.loc 2 317 0
+	ldr	r3, .L50+16
 	movs	r2, #3
 	strb	r2, [r3]
-	.loc 2 270 0
+	.loc 2 310 0
 	b	.L35
 .L43:
-	.loc 2 288 0
+	.loc 2 328 0
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r3, #2
 	beq	.L47
-	.loc 2 288 0 is_stmt 0 discriminator 1
+	.loc 2 328 0 is_stmt 0 discriminator 1
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r3, #3
 	bne	.L35
 .L47:
-	.loc 2 291 0 is_stmt 1
+	.loc 2 331 0 is_stmt 1
 	ldr	r3, .L50
 	ldrb	r2, [r3]	@ zero_extendqisi2
 	ldr	r3, .L50+4
 	strb	r2, [r3]
-	.loc 2 292 0
-	bl	SchM_Task_2ms_B
-	.loc 2 293 0
+	.loc 2 332 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #20]
+	ldrb	r3, [r3]	@ zero_extendqisi2
+	mov	r2, r3
+	ldr	r3, .L50+12
+	str	r2, [r3]
+	.loc 2 334 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #20]
+	ldr	r3, [r3, #4]
+	blx	r3
+	.loc 2 336 0
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r3, #3
 	bne	.L48
-	.loc 2 295 0
-	bl	SchM_Task_10ms
+	.loc 2 338 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #28]
+	ldrb	r3, [r3]	@ zero_extendqisi2
+	mov	r2, r3
+	ldr	r3, .L50+12
+	str	r2, [r3]
+	.loc 2 340 0
+	ldr	r3, .L50+8
+	ldr	r3, [r3, #28]
+	ldr	r3, [r3, #4]
+	blx	r3
 .L48:
-	.loc 2 298 0
+	.loc 2 343 0
 	ldr	r3, .L50+4
 	ldrb	r2, [r3]	@ zero_extendqisi2
 	ldr	r3, .L50
 	ldrb	r3, [r3]	@ zero_extendqisi2
 	cmp	r2, r3
 	bne	.L49
-	.loc 2 301 0
+	.loc 2 346 0
 	ldr	r3, .L50
-	movs	r2, #6
+	movs	r2, #7
 	strb	r2, [r3]
 	b	.L35
 .L49:
-	.loc 2 305 0
-	ldr	r3, .L50+8
+	.loc 2 350 0
+	ldr	r3, .L50+16
 	movs	r2, #4
 	strb	r2, [r3]
 .L35:
-	.loc 2 310 0
+	.loc 2 355 0
 	pop	{r7, pc}
 .L51:
 	.align	2
 .L50:
 	.word	SchM_Task_ID_Activated
 	.word	SchM_Task_ID_Backup
+	.word	tarea
+	.word	RunningTaskPriority
 	.word	SchM_Status
 	.cfi_endproc
 .LFE128:
@@ -618,51 +677,206 @@ SchM_Scheduler:
 	.type	SchM_Init, %function
 SchM_Init:
 .LFB129:
-	.loc 2 325 0
+	.loc 2 370 0
 	.cfi_startproc
-	@ args = 0, pretend = 0, frame = 0
+	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
 	push	{r7, lr}
 	.cfi_def_cfa_offset 8
 	.cfi_offset 7, -8
 	.cfi_offset 14, -4
+	sub	sp, sp, #8
+	.cfi_def_cfa_offset 16
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 328 0
+	str	r0, [r7, #4]
+	.loc 2 373 0
 	ldr	r3, .L53
 	movs	r2, #0
 	strb	r2, [r3]
-	.loc 2 329 0
+	.loc 2 374 0
 	ldr	r3, .L53+4
-	movs	r2, #6
+	movs	r2, #7
 	strb	r2, [r3]
-	.loc 2 330 0
+	.loc 2 375 0
 	ldr	r3, .L53+8
-	movs	r2, #6
+	movs	r2, #7
 	strb	r2, [r3]
-	.loc 2 331 0
+	.loc 2 376 0
 	ldr	r3, .L53+12
-	movs	r2, #6
+	movs	r2, #7
 	strb	r2, [r3]
-	.loc 2 332 0
+	.loc 2 380 0
 	ldr	r3, .L53+16
 	movs	r2, #0
 	strb	r2, [r3]
-	.loc 2 333 0
+	.loc 2 384 0
 	ldr	r3, .L53+20
 	movs	r2, #0
 	strb	r2, [r3]
-	.loc 2 334 0
-	ldr	r3, .L53+24
+	.loc 2 385 0
+	ldr	r3, .L53+20
 	movs	r2, #0
-	strb	r2, [r3]
-	.loc 2 335 0
-	ldr	r3, .L53+28
+	strb	r2, [r3, #8]
+	.loc 2 386 0
+	ldr	r3, .L53+20
 	movs	r2, #0
+	strb	r2, [r3, #16]
+	.loc 2 387 0
+	ldr	r3, .L53+20
+	movs	r2, #0
+	strb	r2, [r3, #24]
+	.loc 2 388 0
+	ldr	r3, .L53+20
+	movs	r2, #0
+	strb	r2, [r3, #32]
+	.loc 2 389 0
+	ldr	r3, .L53+20
+	movs	r2, #0
+	strb	r2, [r3, #40]
+	.loc 2 391 0
+	ldr	r2, .L53+20
+	ldr	r3, [r7, #4]
+	str	r3, [r2, #4]
+	.loc 2 392 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #8
+	ldr	r2, .L53+20
+	str	r3, [r2, #12]
+	.loc 2 393 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #16
+	ldr	r2, .L53+20
+	str	r3, [r2, #20]
+	.loc 2 394 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #24
+	ldr	r2, .L53+20
+	str	r3, [r2, #28]
+	.loc 2 395 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #32
+	ldr	r2, .L53+20
+	str	r3, [r2, #36]
+	.loc 2 396 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #40
+	ldr	r2, .L53+20
+	str	r3, [r2, #44]
+	.loc 2 403 0
+	ldr	r3, [r7, #4]
+	movs	r2, #5
 	strb	r2, [r3]
-	.loc 2 367 0
+	.loc 2 404 0
+	ldr	r3, [r7, #4]
+	movs	r2, #0
+	strb	r2, [r3, #1]
+	.loc 2 405 0
+	ldr	r3, [r7, #4]
+	ldr	r2, .L53+24
+	str	r2, [r3, #4]
+	.loc 2 407 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #8
+	movs	r2, #4
+	strb	r2, [r3]
+	.loc 2 408 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #8
+	movs	r2, #1
+	strb	r2, [r3, #1]
+	.loc 2 409 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #8
+	ldr	r2, .L53+28
+	str	r2, [r3, #4]
+	.loc 2 411 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #16
+	movs	r2, #4
+	strb	r2, [r3]
+	.loc 2 412 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #16
+	movs	r2, #2
+	strb	r2, [r3, #1]
+	.loc 2 413 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #16
+	ldr	r2, .L53+32
+	str	r2, [r3, #4]
+	.loc 2 415 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #24
+	movs	r2, #3
+	strb	r2, [r3]
+	.loc 2 416 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #24
+	movs	r2, #3
+	strb	r2, [r3, #1]
+	.loc 2 417 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #24
+	ldr	r2, .L53+36
+	str	r2, [r3, #4]
+	.loc 2 419 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #32
+	movs	r2, #2
+	strb	r2, [r3]
+	.loc 2 420 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #32
+	movs	r2, #4
+	strb	r2, [r3, #1]
+	.loc 2 421 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #32
+	ldr	r2, .L53+40
+	str	r2, [r3, #4]
+	.loc 2 423 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #40
+	movs	r2, #1
+	strb	r2, [r3]
+	.loc 2 424 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #40
+	movs	r2, #5
+	strb	r2, [r3, #1]
+	.loc 2 425 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #40
+	ldr	r2, .L53+44
+	str	r2, [r3, #4]
+	.loc 2 427 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #48
+	movs	r2, #5
+	strb	r2, [r3]
+	.loc 2 428 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #48
+	movs	r2, #6
+	strb	r2, [r3, #1]
+	.loc 2 429 0
+	ldr	r3, [r7, #4]
+	adds	r3, r3, #48
+	ldr	r2, .L53+48
+	str	r2, [r3, #4]
+	.loc 2 431 0
+	ldr	r3, .L53+20
+	movs	r2, #0
+	strb	r2, [r3, #51]
+	.loc 2 433 0
 	bl	SchM_Start
-	.loc 2 368 0
+	.loc 2 434 0
+	adds	r7, r7, #8
+	.cfi_def_cfa_offset 8
+	mov	sp, r7
+	.cfi_def_cfa_register 13
+	@ sp needed
 	pop	{r7, pc}
 .L54:
 	.align	2
@@ -671,10 +885,15 @@ SchM_Init:
 	.word	SchM_Task_ID_Activated
 	.word	SchM_Task_ID_Running
 	.word	SchM_Task_ID_Backup
-	.word	SchM_10ms_Counter
-	.word	SchM_50ms_Counter
-	.word	SchM_100ms_Counter
 	.word	SchM_Status
+	.word	tarea
+	.word	SchM_Task_1ms
+	.word	SchM_Task_2ms_A
+	.word	SchM_Task_2ms_B
+	.word	SchM_Task_10ms
+	.word	SchM_Task_50ms
+	.word	SchM_Task_100ms
+	.word	SchM_Task_Event
 	.cfi_endproc
 .LFE129:
 	.size	SchM_Init, .-SchM_Init
@@ -685,7 +904,7 @@ SchM_Init:
 	.type	SchM_Stop, %function
 SchM_Stop:
 .LFB130:
-	.loc 2 379 0
+	.loc 2 445 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -695,11 +914,11 @@ SchM_Stop:
 	.cfi_offset 7, -4
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 381 0
+	.loc 2 447 0
 	ldr	r3, .L56
 	movs	r2, #170
 	strb	r2, [r3]
-	.loc 2 382 0
+	.loc 2 448 0
 	mov	sp, r7
 	.cfi_def_cfa_register 13
 	@ sp needed
@@ -721,7 +940,7 @@ SchM_Stop:
 	.type	SysTick_Handler, %function
 SysTick_Handler:
 .LFB131:
-	.loc 2 396 0
+	.loc 2 462 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -731,19 +950,19 @@ SysTick_Handler:
 	.cfi_offset 14, -4
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 398 0
+	.loc 2 464 0
 	bl	cuenta
-	.loc 2 399 0
+	.loc 2 465 0
 	ldr	r3, .L60
 	ldr	r3, [r3]
 	cmp	r3, #0
 	beq	.L58
-	.loc 2 401 0
+	.loc 2 467 0
 	ldr	r3, .L60
 	ldr	r3, [r3]
 	blx	r3
 .L58:
-	.loc 2 403 0
+	.loc 2 469 0
 	pop	{r7, pc}
 .L61:
 	.align	2
@@ -759,24 +978,48 @@ SysTick_Handler:
 	.type	SchM_SchedulePoint, %function
 SchM_SchedulePoint:
 .LFB132:
-	.loc 2 419 0
+	.loc 2 483 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
-	@ link register save eliminated.
-	push	{r7}
-	.cfi_def_cfa_offset 4
-	.cfi_offset 7, -4
+	push	{r7, lr}
+	.cfi_def_cfa_offset 8
+	.cfi_offset 7, -8
+	.cfi_offset 14, -4
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 422 0
-	mov	sp, r7
-	.cfi_def_cfa_register 13
-	@ sp needed
-	ldr	r7, [sp], #4
-	.cfi_restore 7
-	.cfi_def_cfa_offset 0
-	bx	lr
+	.loc 2 485 0
+	ldr	r3, .L64
+	ldrb	r3, [r3, #51]	@ zero_extendqisi2
+	cmp	r3, #1
+	bne	.L62
+	.loc 2 485 0 is_stmt 0 discriminator 1
+	ldr	r3, .L64
+	ldr	r3, [r3, #52]
+	adds	r3, r3, #48
+	ldrb	r3, [r3]	@ zero_extendqisi2
+	mov	r2, r3
+	ldr	r3, .L64+4
+	ldr	r3, [r3]
+	cmp	r2, r3
+	ble	.L62
+	.loc 2 487 0 is_stmt 1
+	ldr	r3, .L64
+	movs	r2, #2
+	strb	r2, [r3, #51]
+	.loc 2 488 0
+	ldr	r3, .L64
+	ldr	r3, [r3, #52]
+	ldr	r3, [r3, #4]
+	blx	r3
+.L62:
+	.loc 2 493 0
+	pop	{r7, pc}
+.L65:
+	.align	2
+.L64:
+	.word	tarea
+	.word	RunningTaskPriority
 	.cfi_endproc
 .LFE132:
 	.size	SchM_SchedulePoint, .-SchM_SchedulePoint
@@ -787,23 +1030,27 @@ SchM_SchedulePoint:
 	.type	SchM_ActivateTask, %function
 SchM_ActivateTask:
 .LFB133:
-	.loc 2 436 0
+	.loc 2 507 0
 	.cfi_startproc
-	@ args = 0, pretend = 0, frame = 8
+	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
 	@ link register save eliminated.
 	push	{r7}
 	.cfi_def_cfa_offset 4
 	.cfi_offset 7, -4
-	sub	sp, sp, #12
-	.cfi_def_cfa_offset 16
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	mov	r3, r0
-	strb	r3, [r7, #7]
-	.loc 2 439 0
-	adds	r7, r7, #12
-	.cfi_def_cfa_offset 4
+	.loc 2 508 0
+	ldr	r3, .L68
+	ldrb	r3, [r3, #51]	@ zero_extendqisi2
+	cmp	r3, #0
+	bne	.L66
+	.loc 2 509 0
+	ldr	r3, .L68
+	movs	r2, #1
+	strb	r2, [r3, #51]
+.L66:
+	.loc 2 512 0
 	mov	sp, r7
 	.cfi_def_cfa_register 13
 	@ sp needed
@@ -811,6 +1058,10 @@ SchM_ActivateTask:
 	.cfi_restore 7
 	.cfi_def_cfa_offset 0
 	bx	lr
+.L69:
+	.align	2
+.L68:
+	.word	tarea
 	.cfi_endproc
 .LFE133:
 	.size	SchM_ActivateTask, .-SchM_ActivateTask
@@ -821,15 +1072,15 @@ SchM_ActivateTask:
 	.file 6 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM_Types.h"
 	.section	.debug_info,"",%progbits
 .Ldebug_info0:
-	.4byte	0x9bd
+	.4byte	0xa76
 	.2byte	0x4
 	.4byte	.Ldebug_abbrev0
 	.byte	0x4
 	.uleb128 0x1
-	.4byte	.LASF1725
+	.4byte	.LASF1738
 	.byte	0x1
-	.4byte	.LASF1726
-	.4byte	.LASF1727
+	.4byte	.LASF1739
+	.4byte	.LASF1740
 	.4byte	.Ltext0
 	.4byte	.Letext0-.Ltext0
 	.4byte	.Ldebug_line0
@@ -917,7 +1168,7 @@ SchM_ActivateTask:
 	.byte	0x20
 	.4byte	0x62
 	.uleb128 0x7
-	.4byte	.LASF1699
+	.4byte	.LASF1714
 	.byte	0x1
 	.byte	0x5
 	.byte	0xc
@@ -1703,7 +1954,7 @@ SchM_ActivateTask:
 	.byte	0x1
 	.byte	0x6
 	.byte	0x16
-	.4byte	0x7a8
+	.4byte	0x7ae
 	.uleb128 0x8
 	.4byte	.LASF1691
 	.sleb128 0
@@ -1725,31 +1976,127 @@ SchM_ActivateTask:
 	.uleb128 0x8
 	.4byte	.LASF1697
 	.sleb128 6
+	.uleb128 0x8
+	.4byte	.LASF1698
+	.sleb128 7
 	.byte	0
 	.uleb128 0x3
-	.4byte	.LASF1698
+	.4byte	.LASF1699
 	.byte	0x6
-	.byte	0x1e
+	.byte	0x1f
 	.4byte	0x775
+	.uleb128 0x15
+	.byte	0x1
+	.byte	0x6
+	.byte	0x23
+	.4byte	0x7d4
+	.uleb128 0x8
+	.4byte	.LASF1700
+	.sleb128 0
+	.uleb128 0x8
+	.4byte	.LASF1701
+	.sleb128 1
+	.uleb128 0x8
+	.4byte	.LASF1702
+	.sleb128 2
+	.byte	0
+	.uleb128 0x3
+	.4byte	.LASF1703
+	.byte	0x6
+	.byte	0x27
+	.4byte	0x7b9
 	.uleb128 0x16
-	.4byte	.LASF1728
+	.byte	0x8
+	.byte	0x6
+	.byte	0x2b
+	.4byte	0x80c
+	.uleb128 0x17
+	.4byte	.LASF1704
+	.byte	0x6
+	.byte	0x2d
+	.4byte	0xa5
+	.byte	0
+	.uleb128 0x17
+	.4byte	.LASF1705
+	.byte	0x6
+	.byte	0x2e
+	.4byte	0x7ae
+	.byte	0x1
+	.uleb128 0x17
+	.4byte	.LASF1706
+	.byte	0x6
+	.byte	0x2f
+	.4byte	0x76a
+	.byte	0x4
+	.byte	0
+	.uleb128 0x3
+	.4byte	.LASF1707
+	.byte	0x6
+	.byte	0x30
+	.4byte	0x7df
+	.uleb128 0x16
+	.byte	0x8
+	.byte	0x6
+	.byte	0x34
+	.4byte	0x85c
+	.uleb128 0x17
+	.4byte	.LASF1708
+	.byte	0x6
+	.byte	0x36
+	.4byte	0xa5
+	.byte	0
+	.uleb128 0x17
+	.4byte	.LASF1709
+	.byte	0x6
+	.byte	0x37
+	.4byte	0xa5
+	.byte	0x1
+	.uleb128 0x17
+	.4byte	.LASF1710
+	.byte	0x6
+	.byte	0x38
+	.4byte	0xa5
+	.byte	0x2
+	.uleb128 0x17
+	.4byte	.LASF1711
+	.byte	0x6
+	.byte	0x39
+	.4byte	0x7d4
+	.byte	0x3
+	.uleb128 0x17
+	.4byte	.LASF1712
+	.byte	0x6
+	.byte	0x3a
+	.4byte	0x85c
+	.byte	0x4
+	.byte	0
+	.uleb128 0x5
+	.byte	0x4
+	.4byte	0x80c
+	.uleb128 0x3
+	.4byte	.LASF1713
+	.byte	0x6
+	.byte	0x3b
+	.4byte	0x817
+	.uleb128 0x18
+	.4byte	.LASF1741
 	.byte	0x1
 	.2byte	0x6d6
 	.4byte	.LFB107
 	.4byte	.LFE107-.LFB107
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x7e8
-	.uleb128 0x17
-	.4byte	.LASF1699
+	.4byte	0x8a2
+	.uleb128 0x19
+	.4byte	.LASF1714
 	.byte	0x1
 	.2byte	0x6d6
 	.4byte	0x278
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -9
-	.uleb128 0x17
-	.4byte	.LASF1700
+	.uleb128 0x19
+	.4byte	.LASF1715
 	.byte	0x1
 	.2byte	0x6d6
 	.4byte	0xbb
@@ -1757,8 +2104,8 @@ SchM_ActivateTask:
 	.byte	0x91
 	.sleb128 -16
 	.byte	0
-	.uleb128 0x18
-	.4byte	.LASF1729
+	.uleb128 0x1a
+	.4byte	.LASF1742
 	.byte	0x1
 	.2byte	0x83d
 	.4byte	0xbb
@@ -1766,9 +2113,9 @@ SchM_ActivateTask:
 	.4byte	.LFE120-.LFB120
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x812
-	.uleb128 0x17
-	.4byte	.LASF1701
+	.4byte	0x8cc
+	.uleb128 0x19
+	.4byte	.LASF1716
 	.byte	0x1
 	.2byte	0x83d
 	.4byte	0xbb
@@ -1776,203 +2123,202 @@ SchM_ActivateTask:
 	.byte	0x91
 	.sleb128 -12
 	.byte	0
-	.uleb128 0x19
-	.4byte	.LASF1707
+	.uleb128 0x1b
+	.4byte	.LASF1743
 	.byte	0x2
-	.byte	0x40
+	.byte	0x47
 	.4byte	.LFB124
 	.4byte	.LFE124-.LFB124
 	.uleb128 0x1
 	.byte	0x9c
-	.uleb128 0x1a
-	.4byte	.LASF1704
+	.uleb128 0x1c
+	.4byte	.LASF1719
 	.byte	0x2
-	.byte	0x5b
+	.byte	0x62
 	.4byte	.LFB125
 	.4byte	.LFE125-.LFB125
 	.uleb128 0x1
 	.byte	0x9c
-	.uleb128 0x1b
-	.4byte	.LASF1730
+	.uleb128 0x1d
+	.4byte	.LASF1744
 	.byte	0x2
-	.byte	0xb5
+	.byte	0xcc
 	.4byte	0xa5
 	.4byte	.LFB126
 	.4byte	.LFE126-.LFB126
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x86a
-	.uleb128 0x1c
-	.4byte	.LASF1702
+	.4byte	0x924
+	.uleb128 0x1e
+	.4byte	.LASF1717
 	.byte	0x2
-	.byte	0xb5
+	.byte	0xcc
 	.4byte	0xbb
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -12
-	.uleb128 0x1c
-	.4byte	.LASF1703
+	.uleb128 0x1e
+	.4byte	.LASF1718
 	.byte	0x2
-	.byte	0xb5
+	.byte	0xcc
 	.4byte	0x76a
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -16
 	.byte	0
-	.uleb128 0x1d
-	.4byte	.LASF1705
+	.uleb128 0x1f
+	.4byte	.LASF1720
 	.byte	0x2
-	.byte	0xc6
+	.byte	0xdd
 	.4byte	.LFB127
 	.4byte	.LFE127-.LFB127
 	.uleb128 0x1
 	.byte	0x9c
-	.uleb128 0x1d
-	.4byte	.LASF1706
+	.uleb128 0x1f
+	.4byte	.LASF1721
 	.byte	0x2
-	.byte	0xe0
+	.byte	0xf7
 	.4byte	.LFB128
 	.4byte	.LFE128-.LFB128
 	.uleb128 0x1
 	.byte	0x9c
-	.uleb128 0x1e
-	.4byte	.LASF1708
+	.uleb128 0x20
+	.4byte	.LASF1745
 	.byte	0x2
-	.2byte	0x144
+	.2byte	0x171
 	.4byte	.LFB129
 	.4byte	.LFE129-.LFB129
 	.uleb128 0x1
 	.byte	0x9c
-	.uleb128 0x1f
-	.4byte	.LASF1709
+	.4byte	0x96c
+	.uleb128 0x19
+	.4byte	.LASF1722
 	.byte	0x2
-	.2byte	0x17a
+	.2byte	0x171
+	.4byte	0x85c
+	.uleb128 0x2
+	.byte	0x91
+	.sleb128 -12
+	.byte	0
+	.uleb128 0x21
+	.4byte	.LASF1723
+	.byte	0x2
+	.2byte	0x1bc
 	.4byte	.LFB130
 	.4byte	.LFE130-.LFB130
 	.uleb128 0x1
 	.byte	0x9c
-	.uleb128 0x20
-	.4byte	.LASF1710
+	.uleb128 0x22
+	.4byte	.LASF1724
 	.byte	0x2
-	.2byte	0x18b
+	.2byte	0x1cd
 	.4byte	.LFB131
 	.4byte	.LFE131-.LFB131
 	.uleb128 0x1
 	.byte	0x9c
-	.uleb128 0x1f
-	.4byte	.LASF1711
+	.uleb128 0x22
+	.4byte	.LASF1725
 	.byte	0x2
-	.2byte	0x1a2
+	.2byte	0x1e2
 	.4byte	.LFB132
 	.4byte	.LFE132-.LFB132
 	.uleb128 0x1
 	.byte	0x9c
 	.uleb128 0x21
-	.4byte	.LASF1731
+	.4byte	.LASF1726
 	.byte	0x2
-	.2byte	0x1b3
+	.2byte	0x1fa
 	.4byte	.LFB133
 	.4byte	.LFE133-.LFB133
 	.uleb128 0x1
 	.byte	0x9c
-	.4byte	0x8fa
-	.uleb128 0x17
-	.4byte	.LASF1712
-	.byte	0x2
-	.2byte	0x1b3
-	.4byte	0x7a8
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -9
-	.byte	0
-	.uleb128 0x22
-	.4byte	.LASF1713
+	.uleb128 0x23
+	.4byte	.LASF1727
 	.byte	0x1
 	.2byte	0x857
-	.4byte	0x906
+	.4byte	0x9c0
 	.uleb128 0xf
 	.4byte	0xb0
-	.uleb128 0x23
-	.4byte	.LASF1714
+	.uleb128 0x24
+	.4byte	.LASF1728
 	.byte	0x2
 	.byte	0x2e
 	.4byte	0x76a
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	pfctnSysTick
-	.uleb128 0x23
-	.4byte	.LASF1715
+	.uleb128 0x24
+	.4byte	.LASF1729
 	.byte	0x2
 	.byte	0x30
 	.4byte	0xa5
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	SchM_Status
-	.uleb128 0x23
-	.4byte	.LASF1716
+	.uleb128 0x24
+	.4byte	.LASF1730
 	.byte	0x2
-	.byte	0x31
+	.byte	0x32
 	.4byte	0xa5
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	SchM_Counter
-	.uleb128 0x23
-	.4byte	.LASF1717
+	.uleb128 0xd
+	.4byte	0x862
+	.4byte	0xa08
+	.uleb128 0xe
+	.4byte	0x90
+	.byte	0x6
+	.byte	0
+	.uleb128 0x24
+	.4byte	.LASF1731
 	.byte	0x2
-	.byte	0x33
-	.4byte	0x7a8
+	.byte	0x35
+	.4byte	0x9f8
+	.uleb128 0x5
+	.byte	0x3
+	.4byte	tarea
+	.uleb128 0x24
+	.4byte	.LASF1732
+	.byte	0x2
+	.byte	0x37
+	.4byte	0x82
+	.uleb128 0x5
+	.byte	0x3
+	.4byte	RunningTaskPriority
+	.uleb128 0x24
+	.4byte	.LASF1733
+	.byte	0x2
+	.byte	0x3a
+	.4byte	0x7ae
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	SchM_Task_ID_Activated
-	.uleb128 0x23
-	.4byte	.LASF1718
+	.uleb128 0x24
+	.4byte	.LASF1734
 	.byte	0x2
-	.byte	0x34
-	.4byte	0x7a8
+	.byte	0x3b
+	.4byte	0x7ae
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	SchM_Task_ID_Running
-	.uleb128 0x23
-	.4byte	.LASF1719
+	.uleb128 0x24
+	.4byte	.LASF1735
 	.byte	0x2
-	.byte	0x35
-	.4byte	0x7a8
+	.byte	0x3c
+	.4byte	0x7ae
 	.uleb128 0x5
 	.byte	0x3
 	.4byte	SchM_Task_ID_Backup
-	.uleb128 0x23
-	.4byte	.LASF1720
+	.uleb128 0x25
+	.4byte	.LASF1736
 	.byte	0x2
-	.byte	0x37
-	.4byte	0xa5
-	.uleb128 0x5
-	.byte	0x3
-	.4byte	SchM_10ms_Counter
-	.uleb128 0x23
-	.4byte	.LASF1721
-	.byte	0x2
-	.byte	0x38
-	.4byte	0xa5
-	.uleb128 0x5
-	.byte	0x3
-	.4byte	SchM_50ms_Counter
-	.uleb128 0x23
-	.4byte	.LASF1722
-	.byte	0x2
-	.byte	0x39
-	.4byte	0xa5
-	.uleb128 0x5
-	.byte	0x3
-	.4byte	SchM_100ms_Counter
-	.uleb128 0x24
-	.4byte	.LASF1723
-	.byte	0x2
-	.byte	0x3c
+	.byte	0x43
 	.4byte	0x89
-	.uleb128 0x23
-	.4byte	.LASF1724
+	.uleb128 0x24
+	.4byte	.LASF1737
 	.byte	0x2
-	.byte	0x3e
+	.byte	0x45
 	.4byte	0x89
 	.uleb128 0x5
 	.byte	0x3
@@ -2230,41 +2576,31 @@ SchM_ActivateTask:
 	.byte	0
 	.byte	0
 	.uleb128 0x16
-	.uleb128 0x2e
+	.uleb128 0x13
 	.byte	0x1
-	.uleb128 0x3
-	.uleb128 0xe
+	.uleb128 0xb
+	.uleb128 0xb
 	.uleb128 0x3a
 	.uleb128 0xb
 	.uleb128 0x3b
-	.uleb128 0x5
-	.uleb128 0x27
-	.uleb128 0x19
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x12
-	.uleb128 0x6
-	.uleb128 0x40
-	.uleb128 0x18
-	.uleb128 0x2117
-	.uleb128 0x19
+	.uleb128 0xb
 	.uleb128 0x1
 	.uleb128 0x13
 	.byte	0
 	.byte	0
 	.uleb128 0x17
-	.uleb128 0x5
+	.uleb128 0xd
 	.byte	0
 	.uleb128 0x3
 	.uleb128 0xe
 	.uleb128 0x3a
 	.uleb128 0xb
 	.uleb128 0x3b
-	.uleb128 0x5
+	.uleb128 0xb
 	.uleb128 0x49
 	.uleb128 0x13
-	.uleb128 0x2
-	.uleb128 0x18
+	.uleb128 0x38
+	.uleb128 0xb
 	.byte	0
 	.byte	0
 	.uleb128 0x18
@@ -2278,31 +2614,6 @@ SchM_ActivateTask:
 	.uleb128 0x5
 	.uleb128 0x27
 	.uleb128 0x19
-	.uleb128 0x49
-	.uleb128 0x13
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x12
-	.uleb128 0x6
-	.uleb128 0x40
-	.uleb128 0x18
-	.uleb128 0x2116
-	.uleb128 0x19
-	.uleb128 0x1
-	.uleb128 0x13
-	.byte	0
-	.byte	0
-	.uleb128 0x19
-	.uleb128 0x2e
-	.byte	0
-	.uleb128 0x3f
-	.uleb128 0x19
-	.uleb128 0x3
-	.uleb128 0xe
-	.uleb128 0x3a
-	.uleb128 0xb
-	.uleb128 0x3b
-	.uleb128 0xb
 	.uleb128 0x11
 	.uleb128 0x1
 	.uleb128 0x12
@@ -2311,10 +2622,73 @@ SchM_ActivateTask:
 	.uleb128 0x18
 	.uleb128 0x2117
 	.uleb128 0x19
+	.uleb128 0x1
+	.uleb128 0x13
+	.byte	0
+	.byte	0
+	.uleb128 0x19
+	.uleb128 0x5
+	.byte	0
+	.uleb128 0x3
+	.uleb128 0xe
+	.uleb128 0x3a
+	.uleb128 0xb
+	.uleb128 0x3b
+	.uleb128 0x5
+	.uleb128 0x49
+	.uleb128 0x13
+	.uleb128 0x2
+	.uleb128 0x18
 	.byte	0
 	.byte	0
 	.uleb128 0x1a
 	.uleb128 0x2e
+	.byte	0x1
+	.uleb128 0x3
+	.uleb128 0xe
+	.uleb128 0x3a
+	.uleb128 0xb
+	.uleb128 0x3b
+	.uleb128 0x5
+	.uleb128 0x27
+	.uleb128 0x19
+	.uleb128 0x49
+	.uleb128 0x13
+	.uleb128 0x11
+	.uleb128 0x1
+	.uleb128 0x12
+	.uleb128 0x6
+	.uleb128 0x40
+	.uleb128 0x18
+	.uleb128 0x2116
+	.uleb128 0x19
+	.uleb128 0x1
+	.uleb128 0x13
+	.byte	0
+	.byte	0
+	.uleb128 0x1b
+	.uleb128 0x2e
+	.byte	0
+	.uleb128 0x3f
+	.uleb128 0x19
+	.uleb128 0x3
+	.uleb128 0xe
+	.uleb128 0x3a
+	.uleb128 0xb
+	.uleb128 0x3b
+	.uleb128 0xb
+	.uleb128 0x11
+	.uleb128 0x1
+	.uleb128 0x12
+	.uleb128 0x6
+	.uleb128 0x40
+	.uleb128 0x18
+	.uleb128 0x2117
+	.uleb128 0x19
+	.byte	0
+	.byte	0
+	.uleb128 0x1c
+	.uleb128 0x2e
 	.byte	0
 	.uleb128 0x3f
 	.uleb128 0x19
@@ -2336,7 +2710,7 @@ SchM_ActivateTask:
 	.uleb128 0x19
 	.byte	0
 	.byte	0
-	.uleb128 0x1b
+	.uleb128 0x1d
 	.uleb128 0x2e
 	.byte	0x1
 	.uleb128 0x3f
@@ -2363,7 +2737,7 @@ SchM_ActivateTask:
 	.uleb128 0x13
 	.byte	0
 	.byte	0
-	.uleb128 0x1c
+	.uleb128 0x1e
 	.uleb128 0x5
 	.byte	0
 	.uleb128 0x3
@@ -2376,50 +2750,6 @@ SchM_ActivateTask:
 	.uleb128 0x13
 	.uleb128 0x2
 	.uleb128 0x18
-	.byte	0
-	.byte	0
-	.uleb128 0x1d
-	.uleb128 0x2e
-	.byte	0
-	.uleb128 0x3f
-	.uleb128 0x19
-	.uleb128 0x3
-	.uleb128 0xe
-	.uleb128 0x3a
-	.uleb128 0xb
-	.uleb128 0x3b
-	.uleb128 0xb
-	.uleb128 0x27
-	.uleb128 0x19
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x12
-	.uleb128 0x6
-	.uleb128 0x40
-	.uleb128 0x18
-	.uleb128 0x2116
-	.uleb128 0x19
-	.byte	0
-	.byte	0
-	.uleb128 0x1e
-	.uleb128 0x2e
-	.byte	0
-	.uleb128 0x3f
-	.uleb128 0x19
-	.uleb128 0x3
-	.uleb128 0xe
-	.uleb128 0x3a
-	.uleb128 0xb
-	.uleb128 0x3b
-	.uleb128 0x5
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x12
-	.uleb128 0x6
-	.uleb128 0x40
-	.uleb128 0x18
-	.uleb128 0x2116
-	.uleb128 0x19
 	.byte	0
 	.byte	0
 	.uleb128 0x1f
@@ -2432,6 +2762,54 @@ SchM_ActivateTask:
 	.uleb128 0x3a
 	.uleb128 0xb
 	.uleb128 0x3b
+	.uleb128 0xb
+	.uleb128 0x27
+	.uleb128 0x19
+	.uleb128 0x11
+	.uleb128 0x1
+	.uleb128 0x12
+	.uleb128 0x6
+	.uleb128 0x40
+	.uleb128 0x18
+	.uleb128 0x2116
+	.uleb128 0x19
+	.byte	0
+	.byte	0
+	.uleb128 0x20
+	.uleb128 0x2e
+	.byte	0x1
+	.uleb128 0x3f
+	.uleb128 0x19
+	.uleb128 0x3
+	.uleb128 0xe
+	.uleb128 0x3a
+	.uleb128 0xb
+	.uleb128 0x3b
+	.uleb128 0x5
+	.uleb128 0x27
+	.uleb128 0x19
+	.uleb128 0x11
+	.uleb128 0x1
+	.uleb128 0x12
+	.uleb128 0x6
+	.uleb128 0x40
+	.uleb128 0x18
+	.uleb128 0x2116
+	.uleb128 0x19
+	.uleb128 0x1
+	.uleb128 0x13
+	.byte	0
+	.byte	0
+	.uleb128 0x21
+	.uleb128 0x2e
+	.byte	0
+	.uleb128 0x3f
+	.uleb128 0x19
+	.uleb128 0x3
+	.uleb128 0xe
+	.uleb128 0x3a
+	.uleb128 0xb
+	.uleb128 0x3b
 	.uleb128 0x5
 	.uleb128 0x27
 	.uleb128 0x19
@@ -2445,7 +2823,7 @@ SchM_ActivateTask:
 	.uleb128 0x19
 	.byte	0
 	.byte	0
-	.uleb128 0x20
+	.uleb128 0x22
 	.uleb128 0x2e
 	.byte	0
 	.uleb128 0x3f
@@ -2468,32 +2846,7 @@ SchM_ActivateTask:
 	.uleb128 0x19
 	.byte	0
 	.byte	0
-	.uleb128 0x21
-	.uleb128 0x2e
-	.byte	0x1
-	.uleb128 0x3f
-	.uleb128 0x19
-	.uleb128 0x3
-	.uleb128 0xe
-	.uleb128 0x3a
-	.uleb128 0xb
-	.uleb128 0x3b
-	.uleb128 0x5
-	.uleb128 0x27
-	.uleb128 0x19
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x12
-	.uleb128 0x6
-	.uleb128 0x40
-	.uleb128 0x18
-	.uleb128 0x2117
-	.uleb128 0x19
-	.uleb128 0x1
-	.uleb128 0x13
-	.byte	0
-	.byte	0
-	.uleb128 0x22
+	.uleb128 0x23
 	.uleb128 0x34
 	.byte	0
 	.uleb128 0x3
@@ -2510,7 +2863,7 @@ SchM_ActivateTask:
 	.uleb128 0x19
 	.byte	0
 	.byte	0
-	.uleb128 0x23
+	.uleb128 0x24
 	.uleb128 0x34
 	.byte	0
 	.uleb128 0x3
@@ -2527,7 +2880,7 @@ SchM_ActivateTask:
 	.uleb128 0x18
 	.byte	0
 	.byte	0
-	.uleb128 0x24
+	.uleb128 0x25
 	.uleb128 0x34
 	.byte	0
 	.uleb128 0x3
@@ -7667,13 +8020,8 @@ SchM_ActivateTask:
 .LASF658:
 	.ascii	"_REENT_L64A_BUF(ptr) ((ptr)->_new._reent._l64a_buf)"
 	.ascii	"\000"
-.LASF1344:
-	.ascii	"TPI_DEVID_MinBufSz_Msk (0x7UL << TPI_DEVID_MinBufSz"
-	.ascii	"_Pos)\000"
 .LASF148:
 	.ascii	"__DBL_EPSILON__ ((double)2.2204460492503131e-16L)\000"
-.LASF1215:
-	.ascii	"ITM_LSR_Access_Pos 1\000"
 .LASF244:
 	.ascii	"__UACCUM_IBIT__ 16\000"
 .LASF1341:
@@ -7685,8 +8033,6 @@ SchM_ActivateTask:
 .LASF960:
 	.ascii	"SCB_CPUID_IMPLEMENTER_Msk (0xFFUL << SCB_CPUID_IMPL"
 	.ascii	"EMENTER_Pos)\000"
-.LASF1491:
-	.ascii	"CoreDebug_DEMCR_VC_CHKERR_Pos 6\000"
 .LASF1444:
 	.ascii	"FPU_MVFR1_FtZ_mode_Msk (0xFUL << FPU_MVFR1_FtZ_mode"
 	.ascii	"_Pos)\000"
@@ -7697,12 +8043,11 @@ SchM_ActivateTask:
 .LASF1492:
 	.ascii	"CoreDebug_DEMCR_VC_CHKERR_Msk (1UL << CoreDebug_DEM"
 	.ascii	"CR_VC_CHKERR_Pos)\000"
-.LASF1355:
-	.ascii	"MPU_TYPE_DREGION_Pos 8\000"
+.LASF637:
+	.ascii	"_REENT_SIGNGAM(ptr) ((ptr)->_new._reent._gamma_sign"
+	.ascii	"gam)\000"
 .LASF129:
 	.ascii	"__FLT_MAX_10_EXP__ 38\000"
-.LASF431:
-	.ascii	"___int64_t_defined 1\000"
 .LASF609:
 	.ascii	"_WINT_T \000"
 .LASF1219:
@@ -7759,12 +8104,14 @@ SchM_ActivateTask:
 	.ascii	"__STDC__ 1\000"
 .LASF941:
 	.ascii	"__INLINE inline\000"
-.LASF283:
-	.ascii	"__USQ_IBIT__ 0\000"
+.LASF1491:
+	.ascii	"CoreDebug_DEMCR_VC_CHKERR_Pos 6\000"
 .LASF576:
 	.ascii	"_BSD_WCHAR_T_ \000"
 .LASF396:
 	.ascii	"_READ_WRITE_BUFSIZE_TYPE int\000"
+.LASF1116:
+	.ascii	"SCB_ITCMCR_RETEN_Msk (1UL << SCB_ITCMCR_RETEN_Pos)\000"
 .LASF1319:
 	.ascii	"TPI_FIFO1_ITM_ATVALID_Pos 29\000"
 .LASF290:
@@ -7793,11 +8140,9 @@ SchM_ActivateTask:
 	.ascii	"__DBL_MAX_10_EXP__ 308\000"
 .LASF1110:
 	.ascii	"SCB_CSSELR_IND_Msk (1UL << SCB_CSSELR_IND_Pos)\000"
-.LASF284:
-	.ascii	"__UDQ_FBIT__ 64\000"
 .LASF1206:
 	.ascii	"ITM_TCR_ITMENA_Msk (1UL << ITM_TCR_ITMENA_Pos)\000"
-.LASF1714:
+.LASF1728:
 	.ascii	"pfctnSysTick\000"
 .LASF1089:
 	.ascii	"SCB_CTR_DMINLINE_Pos 16\000"
@@ -7805,8 +8150,8 @@ SchM_ActivateTask:
 	.ascii	"__WCHAR_TYPE__ unsigned int\000"
 .LASF478:
 	.ascii	"__GNUCLIKE___TYPEOF 1\000"
-.LASF291:
-	.ascii	"__SA_IBIT__ 16\000"
+.LASF1706:
+	.ascii	"TaskFncPtr\000"
 .LASF856:
 	.ascii	"INT32_C(x) __INT32_C(x)\000"
 .LASF301:
@@ -7833,7 +8178,7 @@ SchM_ActivateTask:
 	.ascii	"__ITCM_PRESENT 1\000"
 .LASF1141:
 	.ascii	"SCB_AHBSCR_TPRI_Pos 2\000"
-.LASF1727:
+.LASF1740:
 	.ascii	"C:\\\\VScodeworkspace\\\\04_SchedulerBase\\\\04_Sch"
 	.ascii	"edulerBase\\\\src\\\\Services\000"
 .LASF224:
@@ -7887,9 +8232,9 @@ SchM_ActivateTask:
 	.ascii	"ENDING_Pos)\000"
 .LASF985:
 	.ascii	"SCB_ICSR_RETTOBASE_Pos 11\000"
-.LASF1273:
-	.ascii	"DWT_FUNCTION_DATAVSIZE_Pos 10\000"
-.LASF1704:
+.LASF1315:
+	.ascii	"TPI_FIFO0_ETM0_Pos 0\000"
+.LASF1719:
 	.ascii	"SchM_Callback\000"
 .LASF136:
 	.ascii	"__FLT_HAS_INFINITY__ 1\000"
@@ -7920,6 +8265,8 @@ SchM_ActivateTask:
 .LASF1234:
 	.ascii	"DWT_CTRL_LSUEVTENA_Msk (0x1UL << DWT_CTRL_LSUEVTENA"
 	.ascii	"_Pos)\000"
+.LASF711:
+	.ascii	"__SNBF 0x0002\000"
 .LASF634:
 	.ascii	"_REENT_CHECK_EMERGENCY(ptr) \000"
 .LASF1062:
@@ -7951,6 +8298,8 @@ SchM_ActivateTask:
 	.ascii	"_FSTDIO \000"
 .LASF931:
 	.ascii	"ID_PWM1 (60)\000"
+.LASF1732:
+	.ascii	"RunningTaskPriority\000"
 .LASF724:
 	.ascii	"__SL64 0x8000\000"
 .LASF1353:
@@ -7989,6 +8338,8 @@ SchM_ActivateTask:
 	.ascii	"INTMAX_MIN (-INTMAX_MAX - 1)\000"
 .LASF820:
 	.ascii	"INT_LEAST32_MAX (__INT_LEAST32_MAX__)\000"
+.LASF1331:
+	.ascii	"TPI_FIFO1_ITM0_Pos 0\000"
 .LASF1624:
 	.ascii	"ISI_IRQn\000"
 .LASF78:
@@ -8095,10 +8446,12 @@ SchM_ActivateTask:
 	.ascii	"_DEFUN_VOID(name) name(_NOARGS)\000"
 .LASF1361:
 	.ascii	"MPU_CTRL_HFNMIENA_Pos 1\000"
+.LASF1134:
+	.ascii	"SCB_CACR_FORCEWT_Msk (1UL << SCB_CACR_FORCEWT_Pos)\000"
 .LASF1451:
 	.ascii	"CoreDebug_DHCSR_S_LOCKUP_Pos 19\000"
-.LASF1331:
-	.ascii	"TPI_FIFO1_ITM0_Pos 0\000"
+.LASF1215:
+	.ascii	"ITM_LSR_Access_Pos 1\000"
 .LASF543:
 	.ascii	"__sym_compat(sym,impl,verid) __asm__(\".symver \" #"
 	.ascii	"impl \", \" #sym \"@\" #verid)\000"
@@ -8130,7 +8483,7 @@ SchM_ActivateTask:
 	.ascii	"FPU_FPCCR_ASPEN_Msk (1UL << FPU_FPCCR_ASPEN_Pos)\000"
 .LASF755:
 	.ascii	"ferror(p) __sferror(p)\000"
-.LASF1700:
+.LASF1715:
 	.ascii	"priority\000"
 .LASF23:
 	.ascii	"__BIGGEST_ALIGNMENT__ 8\000"
@@ -8159,10 +8512,12 @@ SchM_ActivateTask:
 	.ascii	"TASKS_50_MS\000"
 .LASF695:
 	.ascii	"fd_set _types_fd_set\000"
-.LASF1711:
+.LASF1725:
 	.ascii	"SchM_SchedulePoint\000"
 .LASF266:
 	.ascii	"__ULLACCUM_MAX__ 0XFFFFFFFFFFFFFFFFP-32ULLK\000"
+.LASF1074:
+	.ascii	"SCB_DFSR_DWTTRAP_Msk (1UL << SCB_DFSR_DWTTRAP_Pos)\000"
 .LASF1012:
 	.ascii	"SCB_CCR_BP_Msk (1UL << SCB_CCR_BP_Pos)\000"
 .LASF907:
@@ -8209,8 +8564,8 @@ SchM_ActivateTask:
 .LASF1318:
 	.ascii	"TPI_ITATBCTR2_ATREADY_Msk (0x1UL << TPI_ITATBCTR2_A"
 	.ascii	"TREADY_Pos)\000"
-.LASF1564:
-	.ascii	"SVCall_IRQn\000"
+.LASF556:
+	.ascii	"__ISO_C_VISIBLE 2011\000"
 .LASF117:
 	.ascii	"__INTPTR_MAX__ 2147483647\000"
 .LASF1165:
@@ -8219,6 +8574,8 @@ SchM_ActivateTask:
 	.ascii	"FPU_FPDSCR_FZ_Pos 24\000"
 .LASF613:
 	.ascii	"_ATEXIT_SIZE 32\000"
+.LASF1549:
+	.ascii	"long int\000"
 .LASF1357:
 	.ascii	"MPU_TYPE_SEPARATE_Pos 0\000"
 .LASF978:
@@ -8375,7 +8732,7 @@ SchM_ActivateTask:
 	.ascii	"INT_FAST16_MAX (__INT_FAST16_MAX__)\000"
 .LASF523:
 	.ascii	"__nonnull(x) __attribute__((__nonnull__(x)))\000"
-.LASF1717:
+.LASF1733:
 	.ascii	"SchM_Task_ID_Activated\000"
 .LASF160:
 	.ascii	"__LDBL_MAX__ 1.7976931348623157e+308L\000"
@@ -8427,9 +8784,6 @@ SchM_ActivateTask:
 .LASF1192:
 	.ascii	"ITM_TCR_TraceBusID_Msk (0x7FUL << ITM_TCR_TraceBusI"
 	.ascii	"D_Pos)\000"
-.LASF1448:
-	.ascii	"CoreDebug_DHCSR_S_RESET_ST_Msk (1UL << CoreDebug_DH"
-	.ascii	"CSR_S_RESET_ST_Pos)\000"
 .LASF876:
 	.ascii	"ID_RSTC ( 1)\000"
 .LASF285:
@@ -8440,8 +8794,8 @@ SchM_ActivateTask:
 	.ascii	"__DBL_MANT_DIG__ 53\000"
 .LASF476:
 	.ascii	"__GNUCLIKE_ASM 3\000"
-.LASF712:
-	.ascii	"__SRD 0x0004\000"
+.LASF1147:
+	.ascii	"SCB_ABFSR_EPPB_Pos 4\000"
 .LASF770:
 	.ascii	"signed\000"
 .LASF1655:
@@ -8507,19 +8861,19 @@ SchM_ActivateTask:
 	.ascii	"__LEAST32 \"l\"\000"
 .LASF1680:
 	.ascii	"AHBPCR\000"
-.LASF1707:
+.LASF1743:
 	.ascii	"cuenta\000"
 .LASF216:
 	.ascii	"__ULFRACT_MAX__ 0XFFFFFFFFP-32ULR\000"
-.LASF1709:
+.LASF1723:
 	.ascii	"SchM_Stop\000"
 .LASF467:
 	.ascii	"__flexarr [0]\000"
 .LASF641:
 	.ascii	"_REENT_RAND48_ADD(ptr) ((ptr)->_new._reent._r48._ad"
 	.ascii	"d)\000"
-.LASF225:
-	.ascii	"__ULLFRACT_MIN__ 0.0ULLR\000"
+.LASF210:
+	.ascii	"__LFRACT_MIN__ (-0.5LR-0.5LR)\000"
 .LASF1570:
 	.ascii	"RTC_IRQn\000"
 .LASF1365:
@@ -8529,8 +8883,6 @@ SchM_ActivateTask:
 	.ascii	"TIVE_Pos)\000"
 .LASF1544:
 	.ascii	"unsigned char\000"
-.LASF617:
-	.ascii	"_RAND48_SEED_0 (0x330e)\000"
 .LASF72:
 	.ascii	"__LONG_LONG_MAX__ 9223372036854775807LL\000"
 .LASF590:
@@ -8539,9 +8891,8 @@ SchM_ActivateTask:
 	.ascii	"_VOLATILE volatile\000"
 .LASF24:
 	.ascii	"__ORDER_LITTLE_ENDIAN__ 1234\000"
-.LASF637:
-	.ascii	"_REENT_SIGNGAM(ptr) ((ptr)->_new._reent._gamma_sign"
-	.ascii	"gam)\000"
+.LASF1701:
+	.ascii	"READY\000"
 .LASF1481:
 	.ascii	"CoreDebug_DEMCR_MON_EN_Pos 16\000"
 .LASF408:
@@ -8609,10 +8960,8 @@ SchM_ActivateTask:
 	.ascii	"SCB_HFSR_DEBUGEVT_Pos 31\000"
 .LASF1560:
 	.ascii	"HardFault_IRQn\000"
-.LASF1710:
+.LASF1724:
 	.ascii	"SysTick_Handler\000"
-.LASF793:
-	.ascii	"__int_least8_t_defined 1\000"
 .LASF1529:
 	.ascii	"STD_IDLE 0x00\000"
 .LASF987:
@@ -8629,7 +8978,7 @@ SchM_ActivateTask:
 	.ascii	"STD_TYPES_H \000"
 .LASF868:
 	.ascii	"__FPU_PRESENT 1\000"
-.LASF1706:
+.LASF1721:
 	.ascii	"SchM_Scheduler\000"
 .LASF920:
 	.ascii	"ID_TC6 (47)\000"
@@ -8708,8 +9057,8 @@ SchM_ActivateTask:
 	.ascii	"__XSI_VISIBLE 700\000"
 .LASF1126:
 	.ascii	"SCB_DTCMCR_RMW_Msk (1UL << SCB_DTCMCR_RMW_Pos)\000"
-.LASF948:
-	.ascii	"__CORE_CMSIMD_H \000"
+.LASF468:
+	.ascii	"__bounded \000"
 .LASF33:
 	.ascii	"__WINT_TYPE__ unsigned int\000"
 .LASF1314:
@@ -8784,7 +9133,7 @@ SchM_ActivateTask:
 	.ascii	"SEEK_END 2\000"
 .LASF116:
 	.ascii	"__UINT_FAST64_MAX__ 18446744073709551615ULL\000"
-.LASF1713:
+.LASF1727:
 	.ascii	"ITM_RxBuffer\000"
 .LASF27:
 	.ascii	"__BYTE_ORDER__ __ORDER_LITTLE_ENDIAN__\000"
@@ -8800,6 +9149,8 @@ SchM_ActivateTask:
 	.ascii	"__FRACT_IBIT__ 0\000"
 .LASF156:
 	.ascii	"__LDBL_MIN_10_EXP__ (-307)\000"
+.LASF1499:
+	.ascii	"SCS_BASE (0xE000E000UL)\000"
 .LASF123:
 	.ascii	"__FLT_RADIX__ 2\000"
 .LASF972:
@@ -8879,7 +9230,7 @@ SchM_ActivateTask:
 	.ascii	"SCB_ICSR_ISRPREEMPT_Pos 23\000"
 .LASF1157:
 	.ascii	"SCnSCB_ICTR_INTLINESNUM_Pos 0\000"
-.LASF1730:
+.LASF1744:
 	.ascii	"SysTick_init\000"
 .LASF1308:
 	.ascii	"TPI_FIFO0_ETM_ATVALID_Msk (0x3UL << TPI_FIFO0_ETM_A"
@@ -8907,8 +9258,8 @@ SchM_ActivateTask:
 	.ascii	"SCB_AHBPCR_EN_Msk (1UL << SCB_AHBPCR_EN_Pos)\000"
 .LASF924:
 	.ascii	"ID_TC10 (51)\000"
-.LASF1074:
-	.ascii	"SCB_DFSR_DWTTRAP_Msk (1UL << SCB_DFSR_DWTTRAP_Pos)\000"
+.LASF284:
+	.ascii	"__UDQ_FBIT__ 64\000"
 .LASF797:
 	.ascii	"__int_fast8_t_defined 1\000"
 .LASF925:
@@ -8927,8 +9278,8 @@ SchM_ActivateTask:
 	.ascii	"ON_Pos)\000"
 .LASF353:
 	.ascii	"__ARM_ARCH_7EM__ 1\000"
-.LASF1025:
-	.ascii	"SCB_CCR_USERSETMPEND_Pos 1\000"
+.LASF431:
+	.ascii	"___int64_t_defined 1\000"
 .LASF424:
 	.ascii	"__need_NULL \000"
 .LASF488:
@@ -9006,7 +9357,7 @@ SchM_ActivateTask:
 .LASF487:
 	.ascii	"__compiler_membar() __asm __volatile(\" \" : : : \""
 	.ascii	"memory\")\000"
-.LASF1703:
+.LASF1718:
 	.ascii	"sysTick_handler\000"
 .LASF1020:
 	.ascii	"SCB_CCR_BFHFNMIGN_Msk (1UL << SCB_CCR_BFHFNMIGN_Pos"
@@ -9050,7 +9401,7 @@ SchM_ActivateTask:
 	.ascii	"__PTRDIFF_MAX__ 2147483647\000"
 .LASF1661:
 	.ascii	"CCSIDR\000"
-.LASF1729:
+.LASF1742:
 	.ascii	"SysTick_Config\000"
 .LASF1052:
 	.ascii	"SCB_SHCSR_USGFAULTACT_Msk (1UL << SCB_SHCSR_USGFAUL"
@@ -9180,7 +9531,7 @@ SchM_ActivateTask:
 	.ascii	"MPU_RBAR_VALID_Pos 4\000"
 .LASF1267:
 	.ascii	"DWT_FUNCTION_MATCHED_Pos 24\000"
-.LASF1705:
+.LASF1720:
 	.ascii	"SchM_Start\000"
 .LASF71:
 	.ascii	"__LONG_MAX__ 2147483647L\000"
@@ -9223,8 +9574,8 @@ SchM_ActivateTask:
 	.ascii	"__SWR 0x0008\000"
 .LASF332:
 	.ascii	"__ARM_FEATURE_UNALIGNED 1\000"
-.LASF231:
-	.ascii	"__SACCUM_MAX__ 0X7FFFP-7HK\000"
+.LASF786:
+	.ascii	"__FAST16 \000"
 .LASF512:
 	.ascii	"__section(x) __attribute__((__section__(x)))\000"
 .LASF982:
@@ -9255,6 +9606,9 @@ SchM_ActivateTask:
 	.ascii	"__GNUC_VA_LIST \000"
 .LASF928:
 	.ascii	"ID_TRNG (57)\000"
+.LASF1324:
+	.ascii	"TPI_FIFO1_ETM_ATVALID_Msk (0x3UL << TPI_FIFO1_ETM_A"
+	.ascii	"TVALID_Pos)\000"
 .LASF1467:
 	.ascii	"CoreDebug_DHCSR_C_DEBUGEN_Pos 0\000"
 .LASF1381:
@@ -9275,6 +9629,8 @@ SchM_ActivateTask:
 	.ascii	"SCB_CFSR_MEMFAULTSR_Pos 0\000"
 .LASF803:
 	.ascii	"UINTPTR_MAX (__UINTPTR_MAX__)\000"
+.LASF1713:
+	.ascii	"SchMTaskCtrltype\000"
 .LASF610:
 	.ascii	"__need_wint_t\000"
 .LASF333:
@@ -9285,6 +9641,8 @@ SchM_ActivateTask:
 	.ascii	"SCnSCB_ACTLR_DISITMATBFLUSH_Pos 12\000"
 .LASF161:
 	.ascii	"__LDBL_MIN__ 2.2250738585072014e-308L\000"
+.LASF231:
+	.ascii	"__SACCUM_MAX__ 0X7FFFP-7HK\000"
 .LASF933:
 	.ascii	"ID_RSWDT (63)\000"
 .LASF1348:
@@ -9370,8 +9728,6 @@ SchM_ActivateTask:
 	.ascii	"MPU_BASE (SCS_BASE + 0x0D90UL)\000"
 .LASF1327:
 	.ascii	"TPI_FIFO1_ITM2_Pos 16\000"
-.LASF494:
-	.ascii	"__CC_SUPPORTS___FUNC__ 1\000"
 .LASF360:
 	.ascii	"__SAMV71Q21__ 1\000"
 .LASF1692:
@@ -9441,7 +9797,7 @@ SchM_ActivateTask:
 	.ascii	"ym) aliassym __attribute__ ((__alias__ (#sym)))\000"
 .LASF247:
 	.ascii	"__UACCUM_EPSILON__ 0x1P-16UK\000"
-.LASF1724:
+.LASF1737:
 	.ascii	"contador\000"
 .LASF602:
 	.ascii	"__lock_try_acquire(lock) (_CAST_VOID 0)\000"
@@ -9599,10 +9955,13 @@ SchM_ActivateTask:
 	.ascii	"SysTick_CALIB_TENMS_Pos 0\000"
 .LASF255:
 	.ascii	"__ULACCUM_MIN__ 0.0ULK\000"
-.LASF767:
-	.ascii	"__STDINT_EXP(x) __ ##x ##__\000"
+.LASF1344:
+	.ascii	"TPI_DEVID_MinBufSz_Msk (0x7UL << TPI_DEVID_MinBufSz"
+	.ascii	"_Pos)\000"
 .LASF718:
 	.ascii	"__SAPP 0x0100\000"
+.LASF1712:
+	.ascii	"TaskInfo\000"
 .LASF591:
 	.ascii	"_SYS__TYPES_H \000"
 .LASF1665:
@@ -9626,8 +9985,8 @@ SchM_ActivateTask:
 	.ascii	"_AND ,\000"
 .LASF475:
 	.ascii	"__END_DECLS \000"
-.LASF1147:
-	.ascii	"SCB_ABFSR_EPPB_Pos 4\000"
+.LASF283:
+	.ascii	"__USQ_IBIT__ 0\000"
 .LASF1555:
 	.ascii	"sizetype\000"
 .LASF435:
@@ -9646,8 +10005,8 @@ SchM_ActivateTask:
 	.ascii	"DRESS_Pos)\000"
 .LASF484:
 	.ascii	"__GNUCLIKE_BUILTIN_STDARG 1\000"
-.LASF556:
-	.ascii	"__ISO_C_VISIBLE 2011\000"
+.LASF793:
+	.ascii	"__int_least8_t_defined 1\000"
 .LASF1009:
 	.ascii	"SCB_SCR_SLEEPONEXIT_Pos 1\000"
 .LASF1485:
@@ -9663,7 +10022,7 @@ SchM_ActivateTask:
 	.ascii	"__SLBF 0x0001\000"
 .LASF1571:
 	.ascii	"RTT_IRQn\000"
-.LASF1702:
+.LASF1717:
 	.ascii	"base_freq\000"
 .LASF1406:
 	.ascii	"FPU_FPCCR_THREAD_Msk (1UL << FPU_FPCCR_THREAD_Pos)\000"
@@ -9736,8 +10095,6 @@ SchM_ActivateTask:
 	.ascii	"__INT16_MAX__ 32767\000"
 .LASF370:
 	.ascii	"_NEWLIB_VERSION \"2.2.0\"\000"
-.LASF1721:
-	.ascii	"SchM_50ms_Counter\000"
 .LASF665:
 	.ascii	"_GLOBAL_ATEXIT (_GLOBAL_REENT->_atexit)\000"
 .LASF1208:
@@ -9841,7 +10198,7 @@ SchM_ActivateTask:
 .LASF1184:
 	.ascii	"SysTick_CALIB_SKEW_Msk (1UL << SysTick_CALIB_SKEW_P"
 	.ascii	"os)\000"
-.LASF1723:
+.LASF1736:
 	.ascii	"ISR_COUNTER\000"
 .LASF1539:
 	.ascii	"SCHM_TASK_SCHEDULER_OVERLOAD_1MS 0x02u\000"
@@ -9865,6 +10222,8 @@ SchM_ActivateTask:
 	.ascii	"ID_TC7 (48)\000"
 .LASF45:
 	.ascii	"__UINT32_TYPE__ long unsigned int\000"
+.LASF1708:
+	.ascii	"TickCounter\000"
 .LASF1330:
 	.ascii	"TPI_FIFO1_ITM1_Msk (0xFFUL << TPI_FIFO1_ITM1_Pos)\000"
 .LASF1045:
@@ -9898,6 +10257,8 @@ SchM_ActivateTask:
 	.ascii	"MCAN1_LINE1_IRQn\000"
 .LASF282:
 	.ascii	"__USQ_FBIT__ 32\000"
+.LASF1703:
+	.ascii	"SchMTaskStateType\000"
 .LASF1442:
 	.ascii	"FPU_MVFR1_D_NaN_mode_Msk (0xFUL << FPU_MVFR1_D_NaN_"
 	.ascii	"mode_Pos)\000"
@@ -9905,15 +10266,12 @@ SchM_ActivateTask:
 	.ascii	"MPU_RBAR_REGION_Msk (0xFUL << MPU_RBAR_REGION_Pos)\000"
 .LASF55:
 	.ascii	"__INT_FAST8_TYPE__ int\000"
-.LASF1050:
-	.ascii	"SCB_SHCSR_SVCALLACT_Msk (1UL << SCB_SHCSR_SVCALLACT"
-	.ascii	"_Pos)\000"
 .LASF861:
 	.ascii	"UINTMAX_C(x) __UINTMAX_C(x)\000"
 .LASF462:
 	.ascii	"__ptr_t void *\000"
-.LASF1722:
-	.ascii	"SchM_100ms_Counter\000"
+.LASF1301:
+	.ascii	"TPI_TRIGGER_TRIGGER_Pos 0\000"
 .LASF110:
 	.ascii	"__INT_FAST16_MAX__ 2147483647\000"
 .LASF1332:
@@ -9938,7 +10296,7 @@ SchM_ActivateTask:
 	.ascii	"__CORE_CM7_H_GENERIC \000"
 .LASF1419:
 	.ascii	"FPU_FPDSCR_RMode_Pos 22\000"
-.LASF1731:
+.LASF1726:
 	.ascii	"SchM_ActivateTask\000"
 .LASF1619:
 	.ascii	"TC11_IRQn\000"
@@ -9946,12 +10304,13 @@ SchM_ActivateTask:
 	.ascii	"_PARAMS(paramlist) paramlist\000"
 .LASF806:
 	.ascii	"UINT8_MAX (__UINT8_MAX__)\000"
-.LASF1549:
-	.ascii	"long int\000"
+.LASF1228:
+	.ascii	"DWT_CTRL_NOPRFCNT_Msk (0x1UL << DWT_CTRL_NOPRFCNT_P"
+	.ascii	"os)\000"
 .LASF406:
 	.ascii	"_SIGNED signed\000"
-.LASF76:
-	.ascii	"__WINT_MIN__ 0U\000"
+.LASF1722:
+	.ascii	"TaskArray\000"
 .LASF1180:
 	.ascii	"SysTick_VAL_CURRENT_Msk (0xFFFFFFUL << SysTick_VAL_"
 	.ascii	"CURRENT_Pos)\000"
@@ -10013,7 +10372,7 @@ SchM_ActivateTask:
 	.ascii	"_format__ (__strftime__, fmtarg, firstvararg)))\000"
 .LASF563:
 	.ascii	"__PTRDIFF_T \000"
-.LASF1701:
+.LASF1716:
 	.ascii	"ticks\000"
 .LASF1113:
 	.ascii	"SCB_ITCMCR_SZ_Pos 3\000"
@@ -10021,8 +10380,8 @@ SchM_ActivateTask:
 	.ascii	"FD_ZERO(p) (__extension__ (void)({ size_t __i; char"
 	.ascii	" *__tmp = (char *)p; for (__i = 0; __i < sizeof (*("
 	.ascii	"p)); ++__i) *__tmp++ = 0; }))\000"
-.LASF329:
-	.ascii	"__ARM_FEATURE_DSP 1\000"
+.LASF1025:
+	.ascii	"SCB_CCR_USERSETMPEND_Pos 1\000"
 .LASF1687:
 	.ascii	"LOAD\000"
 .LASF1379:
@@ -10035,6 +10394,8 @@ SchM_ActivateTask:
 	.ascii	"Pos)\000"
 .LASF789:
 	.ascii	"__LEAST8 \"hh\"\000"
+.LASF1700:
+	.ascii	"SUSPENDED\000"
 .LASF537:
 	.ascii	"__strfmonlike(fmtarg,firstvararg) __attribute__((__"
 	.ascii	"format__ (__strfmon__, fmtarg, firstvararg)))\000"
@@ -10055,7 +10416,7 @@ SchM_ActivateTask:
 	.ascii	"uint32_t\000"
 .LASF415:
 	.ascii	"_CAST_VOID (void)\000"
-.LASF1698:
+.LASF1699:
 	.ascii	"SchMTasksIdType\000"
 .LASF443:
 	.ascii	"__SIZE_T \000"
@@ -10130,6 +10491,8 @@ SchM_ActivateTask:
 	.ascii	"os)\000"
 .LASF1621:
 	.ascii	"AES_IRQn\000"
+.LASF1355:
+	.ascii	"MPU_TYPE_DREGION_Pos 8\000"
 .LASF388:
 	.ascii	"__GNUC_PREREQ(maj,min) ((__GNUC__ << 16) + __GNUC_M"
 	.ascii	"INOR__ >= ((maj) << 16) + (min))\000"
@@ -10150,8 +10513,8 @@ SchM_ActivateTask:
 .LASF1368:
 	.ascii	"MPU_RBAR_ADDR_Msk (0x7FFFFFFUL << MPU_RBAR_ADDR_Pos"
 	.ascii	")\000"
-.LASF210:
-	.ascii	"__LFRACT_MIN__ (-0.5LR-0.5LR)\000"
+.LASF1710:
+	.ascii	"TaskOverload\000"
 .LASF377:
 	.ascii	"_HAVE_CC_INHIBIT_LOOP_TO_LIBCALL 1\000"
 .LASF1010:
@@ -10205,7 +10568,7 @@ SchM_ActivateTask:
 	.ascii	"os)\000"
 .LASF771:
 	.ascii	"char\000"
-.LASF1715:
+.LASF1729:
 	.ascii	"SchM_Status\000"
 .LASF1088:
 	.ascii	"SCB_CTR_ERG_Msk (0xFUL << SCB_CTR_ERG_Pos)\000"
@@ -10269,6 +10632,8 @@ SchM_ActivateTask:
 .LASF1232:
 	.ascii	"DWT_CTRL_FOLDEVTENA_Msk (0x1UL << DWT_CTRL_FOLDEVTE"
 	.ascii	"NA_Pos)\000"
+.LASF1702:
+	.ascii	"RUNNING\000"
 .LASF153:
 	.ascii	"__LDBL_MANT_DIG__ 53\000"
 .LASF945:
@@ -10304,8 +10669,6 @@ SchM_ActivateTask:
 	.ascii	"HAVE_INITFINI_ARRAY 1\000"
 .LASF279:
 	.ascii	"__UQQ_IBIT__ 0\000"
-.LASF1135:
-	.ascii	"SCB_CACR_ECCEN_Pos 1\000"
 .LASF428:
 	.ascii	"___int8_t_defined 1\000"
 .LASF788:
@@ -10321,6 +10684,8 @@ SchM_ActivateTask:
 	.ascii	"__bool_true_false_are_defined 1\000"
 .LASF1409:
 	.ascii	"FPU_FPCCR_LSPACT_Pos 0\000"
+.LASF948:
+	.ascii	"__CORE_CMSIMD_H \000"
 .LASF1581:
 	.ascii	"USART1_IRQn\000"
 .LASF555:
@@ -10347,8 +10712,9 @@ SchM_ActivateTask:
 	.ascii	"__USFRACT_EPSILON__ 0x1P-8UHR\000"
 .LASF68:
 	.ascii	"__SCHAR_MAX__ 127\000"
-.LASF1315:
-	.ascii	"TPI_FIFO0_ETM0_Pos 0\000"
+.LASF1448:
+	.ascii	"CoreDebug_DHCSR_S_RESET_ST_Msk (1UL << CoreDebug_DH"
+	.ascii	"CSR_S_RESET_ST_Pos)\000"
 .LASF25:
 	.ascii	"__ORDER_BIG_ENDIAN__ 4321\000"
 .LASF1685:
@@ -10427,15 +10793,19 @@ SchM_ActivateTask:
 	.ascii	"_GCC_PTRDIFF_T \000"
 .LASF693:
 	.ascii	"NFDBITS (sizeof (fd_mask) * NBBY)\000"
-.LASF1708:
+.LASF1745:
 	.ascii	"SchM_Init\000"
 .LASF913:
 	.ascii	"ID_AFEC1 (40)\000"
+.LASF1072:
+	.ascii	"SCB_DFSR_VCATCH_Msk (1UL << SCB_DFSR_VCATCH_Pos)\000"
 .LASF1024:
 	.ascii	"SCB_CCR_UNALIGN_TRP_Msk (1UL << SCB_CCR_UNALIGN_TRP"
 	.ascii	"_Pos)\000"
 .LASF64:
 	.ascii	"__UINTPTR_TYPE__ unsigned int\000"
+.LASF76:
+	.ascii	"__WINT_MIN__ 0U\000"
 .LASF1123:
 	.ascii	"SCB_DTCMCR_RETEN_Pos 2\000"
 .LASF13:
@@ -10458,7 +10828,7 @@ SchM_ActivateTask:
 	.ascii	"ITM_TCR_TSPrescale_Pos 8\000"
 .LASF796:
 	.ascii	"__int_least64_t_defined 1\000"
-.LASF1699:
+.LASF1714:
 	.ascii	"IRQn\000"
 .LASF819:
 	.ascii	"INT_LEAST32_MIN (-__INT_LEAST32_MAX__ - 1)\000"
@@ -10484,8 +10854,8 @@ SchM_ActivateTask:
 .LASF1474:
 	.ascii	"CoreDebug_DEMCR_TRCENA_Msk (1UL << CoreDebug_DEMCR_"
 	.ascii	"TRCENA_Pos)\000"
-.LASF1116:
-	.ascii	"SCB_ITCMCR_RETEN_Msk (1UL << SCB_ITCMCR_RETEN_Pos)\000"
+.LASF767:
+	.ascii	"__STDINT_EXP(x) __ ##x ##__\000"
 .LASF1654:
 	.ascii	"AFSR\000"
 .LASF1041:
@@ -10510,7 +10880,7 @@ SchM_ActivateTask:
 	.ascii	"__DEC64_MAX__ 9.999999999999999E384DD\000"
 .LASF73:
 	.ascii	"__WCHAR_MAX__ 4294967295U\000"
-.LASF1712:
+.LASF1705:
 	.ascii	"TaskId\000"
 .LASF1625:
 	.ascii	"PWM1_IRQn\000"
@@ -10570,6 +10940,8 @@ SchM_ActivateTask:
 	.ascii	"MPU_RASR_SIZE_Msk (0x1FUL << MPU_RASR_SIZE_Pos)\000"
 .LASF936:
 	.ascii	"__CM7_CMSIS_VERSION_MAIN (0x03)\000"
+.LASF1564:
+	.ascii	"SVCall_IRQn\000"
 .LASF1277:
 	.ascii	"DWT_FUNCTION_DATAVMATCH_Pos 8\000"
 .LASF1081:
@@ -10580,12 +10952,14 @@ SchM_ActivateTask:
 	.ascii	"ID_XDMAC (58)\000"
 .LASF1069:
 	.ascii	"SCB_DFSR_EXTERNAL_Pos 4\000"
+.LASF1707:
+	.ascii	"SchMTaskType\000"
 .LASF623:
 	.ascii	"_RAND48_ADD (0x000b)\000"
 .LASF909:
 	.ascii	"ID_USBHS (34)\000"
-.LASF468:
-	.ascii	"__bounded \000"
+.LASF617:
+	.ascii	"_RAND48_SEED_0 (0x330e)\000"
 .LASF1626:
 	.ascii	"SDRAMC_IRQn\000"
 .LASF1031:
@@ -10605,7 +10979,7 @@ SchM_ActivateTask:
 	.ascii	"__LLACCUM_FBIT__ 31\000"
 .LASF1550:
 	.ascii	"__uint32_t\000"
-.LASF1728:
+.LASF1741:
 	.ascii	"NVIC_SetPriority\000"
 .LASF485:
 	.ascii	"__GNUCLIKE_BUILTIN_VAALIST 1\000"
@@ -10645,6 +11019,8 @@ SchM_ActivateTask:
 	.ascii	"SysTick_CTRL_COUNTFLAG_Pos 16\000"
 .LASF839:
 	.ascii	"UINT_FAST64_MAX (__UINT_FAST64_MAX__)\000"
+.LASF329:
+	.ascii	"__ARM_FEATURE_DSP 1\000"
 .LASF1092:
 	.ascii	"SCB_CTR_IMINLINE_Msk (0xFUL << SCB_CTR_IMINLINE_Pos"
 	.ascii	")\000"
@@ -10717,6 +11093,8 @@ SchM_ActivateTask:
 	.ascii	"_IOLBF 1\000"
 .LASF354:
 	.ascii	"__ARM_PCS 1\000"
+.LASF225:
+	.ascii	"__ULLFRACT_MIN__ 0.0ULLR\000"
 .LASF1631:
 	.ascii	"RESERVED0\000"
 .LASF57:
@@ -10744,9 +11122,8 @@ SchM_ActivateTask:
 	.ascii	"_NOTHROW \000"
 .LASF493:
 	.ascii	"__CC_SUPPORTS___INLINE__ 1\000"
-.LASF1324:
-	.ascii	"TPI_FIFO1_ETM_ATVALID_Msk (0x3UL << TPI_FIFO1_ETM_A"
-	.ascii	"TVALID_Pos)\000"
+.LASF743:
+	.ascii	"_stdout_r(x) ((x)->_stdout)\000"
 .LASF1678:
 	.ascii	"ITCMCR\000"
 .LASF1634:
@@ -10768,6 +11145,8 @@ SchM_ActivateTask:
 	.ascii	"TSR_Pos)\000"
 .LASF230:
 	.ascii	"__SACCUM_MIN__ (-0X1P7HK-0X1P7HK)\000"
+.LASF1273:
+	.ascii	"DWT_FUNCTION_DATAVSIZE_Pos 10\000"
 .LASF615:
 	.ascii	"_REENT_INIT_ATEXIT _NULL, _ATEXIT_INIT,\000"
 .LASF626:
@@ -10782,15 +11161,15 @@ SchM_ActivateTask:
 	.ascii	"FPU_MVFR0_Square_root_Pos 20\000"
 .LASF877:
 	.ascii	"ID_RTC ( 2)\000"
-.LASF1072:
-	.ascii	"SCB_DFSR_VCATCH_Msk (1UL << SCB_DFSR_VCATCH_Pos)\000"
+.LASF494:
+	.ascii	"__CC_SUPPORTS___FUNC__ 1\000"
 .LASF232:
 	.ascii	"__SACCUM_EPSILON__ 0x1P-7HK\000"
 .LASF681:
 	.ascii	"__u_char_defined \000"
 .LASF249:
 	.ascii	"__LACCUM_IBIT__ 32\000"
-.LASF1716:
+.LASF1730:
 	.ascii	"SchM_Counter\000"
 .LASF1542:
 	.ascii	"SCHM_TASK_SCHEDULER_HALTED 0xAAu\000"
@@ -10812,7 +11191,7 @@ SchM_ActivateTask:
 	.ascii	"ITM ((ITM_Type *) ITM_BASE )\000"
 .LASF784:
 	.ascii	"__INT64 \"ll\"\000"
-.LASF1725:
+.LASF1738:
 	.ascii	"GNU C 4.9.3 20150529 (release) [ARM/embedded-4_9-br"
 	.ascii	"anch revision 227977] -mcpu=cortex-m7 -mthumb -mflo"
 	.ascii	"at-abi=softfp -mfpu=fpv5-sp-d16 -g3 -std=c99 -fno-b"
@@ -10833,6 +11212,8 @@ SchM_ActivateTask:
 	.ascii	"__have_long32 1\000"
 .LASF1600:
 	.ascii	"ACC_IRQn\000"
+.LASF712:
+	.ascii	"__SRD 0x0004\000"
 .LASF1133:
 	.ascii	"SCB_CACR_FORCEWT_Pos 2\000"
 .LASF717:
@@ -10858,8 +11239,6 @@ SchM_ActivateTask:
 	.ascii	"__UINT64_MAX__ 18446744073709551615ULL\000"
 .LASF616:
 	.ascii	"_REENT_SMALL_CHECK_INIT(ptr) \000"
-.LASF1301:
-	.ascii	"TPI_TRIGGER_TRIGGER_Pos 0\000"
 .LASF245:
 	.ascii	"__UACCUM_MIN__ 0.0UK\000"
 .LASF1144:
@@ -10895,8 +11274,8 @@ SchM_ActivateTask:
 	.ascii	"__timer_t_defined \000"
 .LASF218:
 	.ascii	"__LLFRACT_FBIT__ 63\000"
-.LASF1499:
-	.ascii	"SCS_BASE (0xE000E000UL)\000"
+.LASF1457:
+	.ascii	"CoreDebug_DHCSR_S_REGRDY_Pos 16\000"
 .LASF211:
 	.ascii	"__LFRACT_MAX__ 0X7FFFFFFFP-31LR\000"
 .LASF328:
@@ -10933,8 +11312,8 @@ SchM_ActivateTask:
 	.ascii	"CoreDebug_DEMCR_MON_REQ_Pos 19\000"
 .LASF1299:
 	.ascii	"TPI_FFCR_EnFCont_Pos 1\000"
-.LASF1134:
-	.ascii	"SCB_CACR_FORCEWT_Msk (1UL << SCB_CACR_FORCEWT_Pos)\000"
+.LASF1711:
+	.ascii	"TaskState\000"
 .LASF53:
 	.ascii	"__UINT_LEAST32_TYPE__ long unsigned int\000"
 .LASF103:
@@ -10950,15 +11329,16 @@ SchM_ActivateTask:
 	.ascii	"clearerr_unlocked(p) __sclearerr(p)\000"
 .LASF1508:
 	.ascii	"SCB ((SCB_Type *) SCB_BASE )\000"
-.LASF786:
-	.ascii	"__FAST16 \000"
+.LASF1050:
+	.ascii	"SCB_SHCSR_SVCALLACT_Msk (1UL << SCB_SHCSR_SVCALLACT"
+	.ascii	"_Pos)\000"
 .LASF825:
 	.ascii	"INT_LEAST64_MIN (-__INT_LEAST64_MAX__ - 1)\000"
 .LASF1694:
 	.ascii	"TASKS_10_MS\000"
 .LASF1392:
 	.ascii	"MPU_RASR_ENABLE_Msk (1UL << MPU_RASR_ENABLE_Pos)\000"
-.LASF1719:
+.LASF1735:
 	.ascii	"SchM_Task_ID_Backup\000"
 .LASF1196:
 	.ascii	"ITM_TCR_TSPrescale_Msk (3UL << ITM_TCR_TSPrescale_P"
@@ -10976,6 +11356,8 @@ SchM_ActivateTask:
 	.ascii	"d-4_9-branch revision 227977]\"\000"
 .LASF241:
 	.ascii	"__ACCUM_MAX__ 0X7FFFFFFFP-15K\000"
+.LASF1731:
+	.ascii	"tarea\000"
 .LASF394:
 	.ascii	"__IMPORT \000"
 .LASF1306:
@@ -11002,8 +11384,8 @@ SchM_ActivateTask:
 .LASF749:
 	.ascii	"__sputc_r(__ptr,__c,__p) __sputc_raw_r(__ptr, __c, "
 	.ascii	"__p)\000"
-.LASF711:
-	.ascii	"__SNBF 0x0002\000"
+.LASF1135:
+	.ascii	"SCB_CACR_ECCEN_Pos 1\000"
 .LASF69:
 	.ascii	"__SHRT_MAX__ 32767\000"
 .LASF421:
@@ -11021,17 +11403,14 @@ SchM_ActivateTask:
 	.ascii	" 0, 0}}\000"
 .LASF1202:
 	.ascii	"ITM_TCR_SYNCENA_Msk (1UL << ITM_TCR_SYNCENA_Pos)\000"
-.LASF1228:
-	.ascii	"DWT_CTRL_NOPRFCNT_Msk (0x1UL << DWT_CTRL_NOPRFCNT_P"
-	.ascii	"os)\000"
 .LASF271:
 	.ascii	"__HQ_IBIT__ 0\000"
 .LASF1552:
 	.ascii	"long long int\000"
 .LASF121:
 	.ascii	"__FLT_EVAL_METHOD__ 0\000"
-.LASF1457:
-	.ascii	"CoreDebug_DHCSR_S_REGRDY_Pos 16\000"
+.LASF291:
+	.ascii	"__SA_IBIT__ 16\000"
 .LASF1210:
 	.ascii	"ITM_IRR_ATREADYM_Msk (1UL << ITM_IRR_ATREADYM_Pos)\000"
 .LASF1527:
@@ -11044,6 +11423,8 @@ SchM_ActivateTask:
 	.ascii	"__COPYRIGHT(s) struct __hack\000"
 .LASF381:
 	.ascii	"_WIDE_ORIENT 1\000"
+.LASF1704:
+	.ascii	"TaskPriority\000"
 .LASF773:
 	.ascii	"long\000"
 .LASF296:
@@ -11061,8 +11442,6 @@ SchM_ActivateTask:
 	.ascii	"000000001E-6143DL\000"
 .LASF335:
 	.ascii	"__ARM_FEATURE_CLZ 1\000"
-.LASF1720:
-	.ascii	"SchM_10ms_Counter\000"
 .LASF843:
 	.ascii	"SIZE_MAX (__SIZE_MAX__)\000"
 .LASF89:
@@ -11109,6 +11488,8 @@ SchM_ActivateTask:
 	.ascii	"COUNT_Pos)\000"
 .LASF500:
 	.ascii	"__CONCAT(x,y) __CONCAT1(x,y)\000"
+.LASF1697:
+	.ascii	"TASKS_EVENT_MS\000"
 .LASF152:
 	.ascii	"__DBL_HAS_QUIET_NAN__ 1\000"
 .LASF1658:
@@ -11152,9 +11533,11 @@ SchM_ActivateTask:
 .LASF1242:
 	.ascii	"DWT_CTRL_EXCTRCENA_Msk (0x1UL << DWT_CTRL_EXCTRCENA"
 	.ascii	"_Pos)\000"
+.LASF1709:
+	.ascii	"TaskRunning\000"
 .LASF1247:
 	.ascii	"DWT_CTRL_CYCTAP_Pos 9\000"
-.LASF1726:
+.LASF1739:
 	.ascii	"C:\\VScodeworkspace\\04_SchedulerBase\\04_Scheduler"
 	.ascii	"Base\\src\\Services\\SchM.c\000"
 .LASF115:
@@ -11190,8 +11573,6 @@ SchM_ActivateTask:
 	.ascii	"__TQ_IBIT__ 0\000"
 .LASF1531:
 	.ascii	"STD_OFF 0x00\000"
-.LASF743:
-	.ascii	"_stdout_r(x) ((x)->_stdout)\000"
 .LASF1162:
 	.ascii	"SCnSCB_ACTLR_DISRAMODE_Msk (1UL << SCnSCB_ACTLR_DIS"
 	.ascii	"RAMODE_Pos)\000"
@@ -11224,7 +11605,7 @@ SchM_ActivateTask:
 	.ascii	"signed +0\000"
 .LASF501:
 	.ascii	"__STRING(x) #x\000"
-.LASF1718:
+.LASF1734:
 	.ascii	"SchM_Task_ID_Running\000"
 .LASF766:
 	.ascii	"_SYS__INTSUP_H \000"
@@ -11333,7 +11714,7 @@ SchM_ActivateTask:
 	.ascii	"ATAVSIZE_Pos)\000"
 .LASF3:
 	.ascii	"__GNUC__ 4\000"
-.LASF1697:
+.LASF1698:
 	.ascii	"TASK_NULL\000"
 .LASF1616:
 	.ascii	"TC8_IRQn\000"

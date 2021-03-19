@@ -5262,6 +5262,7 @@ typedef enum
  TASKS_10_MS,
  TASKS_50_MS,
  TASKS_100_MS,
+ TASKS_EVENT_MS,
  TASK_NULL,
 } SchMTasksIdType;
 
@@ -5295,7 +5296,7 @@ typedef struct
 # 25 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.h" 2
 
 
- void SchM_Init();
+ void SchM_Init(SchMTaskType *TaskArray);
 
 
  void SchM_Start(void);
@@ -5311,7 +5312,7 @@ typedef struct
 
  void SchM_SchedulePoint (void);
 
- void SchM_ActivateTask (SchMTasksIdType Task);
+ void SchM_ActivateTask (void);
 # 21 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c" 2
 
 
@@ -5339,6 +5340,9 @@ typedef struct
 
 
  extern void SchM_Task_100ms( void );
+
+
+ extern void SchM_Task_Event( void );
 # 25 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c" 2
 
 
@@ -5364,15 +5368,22 @@ typedef struct
 SchM_CallbackType pfctnSysTick = (SchM_CallbackType)((void *)0);
 
 uint8_t SchM_Status;
+
 uint8_t SchM_Counter;
+
+
+SchMTaskCtrltype tarea[7];
+extern SchMTaskType TaskArray[7];
+int RunningTaskPriority;
+
 
 SchMTasksIdType SchM_Task_ID_Activated;
 SchMTasksIdType SchM_Task_ID_Running;
 SchMTasksIdType SchM_Task_ID_Backup;
 
-uint8_t SchM_10ms_Counter;
-uint8_t SchM_50ms_Counter;
-uint8_t SchM_100ms_Counter;
+
+
+
 
 
 extern unsigned int ISR_COUNTER;
@@ -5383,26 +5394,33 @@ void cuenta()
 {
     contador = ISR_COUNTER;
 }
-# 91 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+# 98 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
 void SchM_Callback(void)
 {
 
     SchM_Counter++;
-# 103 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+# 110 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
     if ((SchM_Counter & 0x01u) == 0x01u)
     {
-        SchM_100ms_Counter++;
 
-        if (SchM_100ms_Counter >= 100u)
+        tarea[5].TickCounter++;
+
+
+        if (tarea[5].TickCounter >= 100u)
         {
 
+
             SchM_Task_ID_Activated = TASKS_100_MS;
-            SchM_100ms_Counter = 0u;
+
+            tarea[5].TickCounter = 0u;
         }
 
         else
         {
+
             SchM_Task_ID_Activated = TASKS_1_MS;
+
+
         }
     }
     else
@@ -5416,17 +5434,22 @@ void SchM_Callback(void)
 
         if ((SchM_Counter & 0x02u) == 0x02u)
         {
-            SchM_50ms_Counter++;
 
-            if (SchM_50ms_Counter >= 25u)
+            tarea[4].TickCounter++;
+
+
+            if (tarea[4].TickCounter >= 25u)
             {
+
                 SchM_Task_ID_Activated = TASKS_50_MS;
-                SchM_50ms_Counter = 0u;
+
+                tarea[4].TickCounter = 0u;
             }
 
             else
             {
                 SchM_Task_ID_Activated = TASKS_2_MS_A;
+
             }
         }
         else
@@ -5440,12 +5463,16 @@ void SchM_Callback(void)
 
             if ((SchM_Counter & 0x03u) == 0x00u)
             {
-                SchM_10ms_Counter++;
 
-                if (SchM_10ms_Counter >= 5u)
+                tarea[3].TickCounter++;
+
+
+                if (tarea[3].TickCounter >= 5u)
                 {
+
                     SchM_Task_ID_Activated = TASKS_10_MS;
-                    SchM_10ms_Counter = 0u;
+
+                    tarea[3].TickCounter = 0u;
                 }
 
                 else
@@ -5456,13 +5483,13 @@ void SchM_Callback(void)
         }
     }
 }
-# 181 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+# 204 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
 uint8_t SysTick_init(uint32_t base_freq, SchM_CallbackType sysTick_handler)
 {
     pfctnSysTick = sysTick_handler;
     return SysTick_Config(12000000UL / base_freq);
 }
-# 198 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+# 221 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
 void SchM_Start(void)
 {
     if (SysTick_init(2000u, SchM_Callback))
@@ -5477,9 +5504,10 @@ void SchM_Start(void)
         SchM_Scheduler();
     }
 }
-# 224 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+# 247 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
 void SchM_Scheduler(void)
 {
+
 
 
 
@@ -5489,11 +5517,22 @@ void SchM_Scheduler(void)
     if ((SchM_Task_ID_Activated == TASKS_1_MS) || (SchM_Task_ID_Activated == TASKS_100_MS))
     {
 
+
         SchM_Task_ID_Backup = SchM_Task_ID_Activated;
-        SchM_Task_1ms();
+
+
+
+        RunningTaskPriority=tarea[0].TaskInfo->TaskPriority;
+        tarea[0].TaskInfo->TaskFncPtr();
+
+
+
+
         if (SchM_Task_ID_Activated == TASKS_100_MS)
         {
-            SchM_Task_100ms();
+
+            RunningTaskPriority=tarea[5].TaskInfo->TaskPriority;
+            tarea[5].TaskInfo->TaskFncPtr();
         }
 
         if (SchM_Task_ID_Backup == SchM_Task_ID_Activated)
@@ -5518,10 +5557,15 @@ void SchM_Scheduler(void)
         {
 
             SchM_Task_ID_Backup = SchM_Task_ID_Activated;
-            SchM_Task_2ms_A();
+
+            RunningTaskPriority=tarea[1].TaskInfo->TaskPriority;
+
+            tarea[1].TaskInfo->TaskFncPtr();
             if (SchM_Task_ID_Activated == TASKS_50_MS)
             {
-                SchM_Task_50ms();
+                RunningTaskPriority=tarea[4].TaskInfo->TaskPriority;
+
+                tarea[4].TaskInfo->TaskFncPtr();
             }
 
             if (SchM_Task_ID_Backup == SchM_Task_ID_Activated)
@@ -5546,10 +5590,15 @@ void SchM_Scheduler(void)
             {
 
                 SchM_Task_ID_Backup = SchM_Task_ID_Activated;
-                SchM_Task_2ms_B();
+                RunningTaskPriority=tarea[2].TaskInfo->TaskPriority;
+
+                tarea[2].TaskInfo->TaskFncPtr();
+
                 if (SchM_Task_ID_Activated == TASKS_10_MS)
                 {
-                    SchM_Task_10ms();
+                    RunningTaskPriority=tarea[3].TaskInfo->TaskPriority;
+
+                    tarea[3].TaskInfo->TaskFncPtr();
                 }
 
                 if (SchM_Task_ID_Backup == SchM_Task_ID_Activated)
@@ -5565,8 +5614,8 @@ void SchM_Scheduler(void)
         }
     }
 }
-# 324 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
-void SchM_Init()
+# 369 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+void SchM_Init(SchMTaskType *TaskArray)
 {
 
 
@@ -5574,20 +5623,71 @@ void SchM_Init()
     SchM_Task_ID_Activated = TASK_NULL;
     SchM_Task_ID_Running = TASK_NULL;
     SchM_Task_ID_Backup = TASK_NULL;
-    SchM_10ms_Counter = 0u;
-    SchM_50ms_Counter = 0u;
-    SchM_100ms_Counter = 0u;
+
+
+
     SchM_Status = 0x00u;
-# 367 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+
+
+
+    tarea[0].TickCounter=0;
+    tarea[1].TickCounter=0;
+    tarea[2].TickCounter=0;
+    tarea[3].TickCounter=0;
+    tarea[4].TickCounter=0;
+    tarea[5].TickCounter=0;
+
+    tarea[0].TaskInfo=&TaskArray[0];
+    tarea[1].TaskInfo=&TaskArray[1];
+    tarea[2].TaskInfo=&TaskArray[2];
+    tarea[3].TaskInfo=&TaskArray[3];
+    tarea[4].TaskInfo=&TaskArray[4];
+    tarea[5].TaskInfo=&TaskArray[5];
+
+
+
+
+
+
+    TaskArray[0].TaskPriority=5;
+    TaskArray[0].TaskId=TASKS_1_MS;
+    TaskArray[0].TaskFncPtr=&SchM_Task_1ms;
+
+    TaskArray[1].TaskPriority=4;
+    TaskArray[1].TaskId=TASKS_2_MS_A;
+    TaskArray[1].TaskFncPtr=&SchM_Task_2ms_A;
+
+    TaskArray[2].TaskPriority=4;
+    TaskArray[2].TaskId=TASKS_2_MS_B;
+    TaskArray[2].TaskFncPtr=&SchM_Task_2ms_B;
+
+    TaskArray[3].TaskPriority=3;
+    TaskArray[3].TaskId=TASKS_10_MS;
+    TaskArray[3].TaskFncPtr=&SchM_Task_10ms;
+
+    TaskArray[4].TaskPriority=2;
+    TaskArray[4].TaskId=TASKS_50_MS;
+    TaskArray[4].TaskFncPtr=&SchM_Task_50ms;
+
+    TaskArray[5].TaskPriority=1;
+    TaskArray[5].TaskId=TASKS_100_MS;
+    TaskArray[5].TaskFncPtr=&SchM_Task_100ms;
+
+    TaskArray[6].TaskPriority=5;
+    TaskArray[6].TaskId=TASKS_EVENT_MS;
+    TaskArray[6].TaskFncPtr=&SchM_Task_Event;
+
+    tarea[6].TaskState=SUSPENDED;
+
     SchM_Start();
 }
-# 378 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+# 444 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
 void SchM_Stop(void)
 {
 
     SchM_Status = 0xAAu;
 }
-# 395 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+# 461 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
 void SysTick_Handler(void)
 {
 
@@ -5597,15 +5697,24 @@ void SysTick_Handler(void)
         (*pfctnSysTick)();
     }
 }
-# 418 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+# 482 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
 void SchM_SchedulePoint (void)
 {
 
+      if((tarea[6].TaskState==READY) && (tarea[6].TaskInfo[6].TaskPriority > RunningTaskPriority))
+      {
+          tarea[6].TaskState=RUNNING;
+          tarea[6].TaskInfo->TaskFncPtr();
+
+
+      }
 
 }
-# 435 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
-void SchM_ActivateTask (SchMTasksIdType TaskId)
+# 506 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services\\SchM.c"
+void SchM_ActivateTask (void)
 {
+      if(tarea[6].TaskState==SUSPENDED)
+     tarea[6].TaskState=READY;
 
 
 }

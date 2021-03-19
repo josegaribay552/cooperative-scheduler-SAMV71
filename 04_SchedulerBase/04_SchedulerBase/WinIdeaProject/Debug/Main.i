@@ -5263,6 +5263,7 @@ typedef enum
  TASKS_10_MS,
  TASKS_50_MS,
  TASKS_100_MS,
+ TASKS_EVENT_MS,
  TASK_NULL,
 } SchMTasksIdType;
 
@@ -5296,7 +5297,7 @@ typedef struct
 # 25 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Services/SchM.h" 2
 
 
- void SchM_Init();
+ void SchM_Init(SchMTaskType *TaskArray);
 
 
  void SchM_Start(void);
@@ -5312,7 +5313,7 @@ typedef struct
 
  void SchM_SchedulePoint (void);
 
- void SchM_ActivateTask (SchMTasksIdType Task);
+ void SchM_ActivateTask (void);
 # 16 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Application\\Main.c" 2
 
 # 1 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Application\\LedCtrl/Led_Ctrl.h" 1
@@ -5334,9 +5335,11 @@ void LedCtrl_BlinkingPattern(void);
 unsigned int ISR_COUNTER = 0;
 unsigned int Dummy;
 unsigned int *Register;
-# 46 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Application\\Main.c"
+# 49 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Application\\Main.c"
 #define PMC_ADDRESS (0x400E0600)
 #define PIO_A_ADDRESS (0x400E0E00)
+
+void limpiar (void);
 
 extern void ImSR()
 {
@@ -5348,8 +5351,23 @@ extern void ImSR()
 
   ISR_COUNTER++;
 
+  if(ISR_COUNTER==2)
+  {
+
+      limpiar();
+    SchM_ActivateTask();
+
+  }
+
 
 }
+
+void limpiar ()
+{
+    ISR_COUNTER=1;
+}
+
+
 
 
 extern int main(void)
@@ -5395,7 +5413,7 @@ extern int main(void)
 
 
 
-  SchM_Init();
+  SchM_Init(TaskArray);
 
   while (1)
   {

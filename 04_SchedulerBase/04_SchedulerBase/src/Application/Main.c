@@ -32,6 +32,9 @@ unsigned int ISR_COUNTER = 0;
 unsigned int Dummy;
 unsigned int *Register;
 
+
+
+
 /*~~~~~~  Local functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 /*----------------------------------------------------------------------------
@@ -46,6 +49,8 @@ unsigned int *Register;
 #define PMC_ADDRESS (0x400E0600)
 #define PIO_A_ADDRESS (0x400E0E00)
 
+void limpiar (void);
+
 extern void ImSR()
 {
   //Puntero para acceder a los registros
@@ -55,9 +60,24 @@ extern void ImSR()
   Dummy = *Register;
   //Contador de Interrupciones
   ISR_COUNTER++;
+  
+  if(ISR_COUNTER==2)
+  {
+    
+      limpiar();       //funcion que reinicia el contador de isr
+    SchM_ActivateTask();
+
+  }
 
   //Implementar logica aqui
 }
+
+void limpiar ()
+{
+    ISR_COUNTER=1;
+}
+
+
 
 
 extern int main(void)

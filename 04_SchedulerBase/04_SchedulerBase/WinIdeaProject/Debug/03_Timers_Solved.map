@@ -9,12 +9,12 @@ SchM_Task_ID_Activated
                     0x1               C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
 Register            0x4               C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
 SchM_Counter        0x1               C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
-SchM_10ms_Counter   0x1               C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
 SchM_Status         0x1               C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
 SchM_Task_ID_Running
                     0x1               C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
-SchM_50ms_Counter   0x1               C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
-SchM_100ms_Counter  0x1               C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
+RunningTaskPriority
+                    0x4               C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
+tarea               0x38              C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
 
 Discarded input sections
 
@@ -347,87 +347,89 @@ LOAD C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\C
                 0x00001000                STACK_SIZE = DEFINED (STACK_SIZE)?STACK_SIZE:0x1000
                 0x00001000                HEAP_SIZE = DEFINED (HEAP_SIZE)?HEAP_SIZE:0x1000
 
-.text           0x00400000      0xf9c
+.text           0x00400000     0x1290
                 0x00400000                . = ALIGN (0x4)
                 0x00400000                _sfixed = .
  *(.vectors)
  .vectors       0x00400000      0x140 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
                 0x00400000                exception_table
  *(.text)
- .text          0x00400140      0x184 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
+ .text          0x00400140      0x1ac C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
                 0x004001a4                ImSR
-                0x004001d8                main
- .text          0x004002c4      0x718 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
-                0x00400398                PMC_EnablePeripheral
-                0x0040040c                PMC_DisablePeripheral
-                0x00400480                PMC_EnableAllPeripherals
-                0x004004c0                PMC_DisableAllPeripherals
-                0x004004fc                PMC_IsPeriphEnabled
-                0x0040053c                PMC_EnableExtOsc
-                0x004005b8                PMC_DisableExtOsc
-                0x004005f4                PMC_SelectExtOsc
-                0x00400660                PMC_SelectExtBypassOsc
-                0x004006cc                PMC_EnableIntRC4_8_12MHz
-                0x00400758                PMC_DisableIntRC4_8_12MHz
-                0x0040079c                PMC_SetPllaClock
-                0x004007f4                PMC_SetMckSelection
-                0x00400838                PMC_DisableAllClocks
-                0x00400888                PMC_ConfigureMckWithPlla
-                0x004008c0                PMC_EnableXT32KFME
-                0x004008ec                PMC_ConfigurePCK0
-                0x0040093c                PMC_ConfigurePCK1
-                0x0040098c                PMC_ConfigurePCK2
- .text          0x004009dc      0x36c C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
-                0x00400a74                cuenta
-                0x00400a90                SchM_Callback
-                0x00400b5c                SysTick_init
-                0x00400b90                SchM_Start
-                0x00400bbc                SchM_Scheduler
-                0x00400c98                SchM_Init
-                0x00400cf4                SchM_Stop
-                0x00400d0c                SysTick_Handler
-                0x00400d28                SchM_SchedulePoint
-                0x00400d34                SchM_ActivateTask
- .text          0x00400d48       0xa4 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
-                0x00400d48                SchM_Task_1ms
-                0x00400d78                SchM_Task_2ms_A
-                0x00400d90                SchM_Task_2ms_B
-                0x00400da8                SchM_Task_10ms
-                0x00400dc0                SchM_Task_50ms
-                0x00400dd4                SchM_Task_100ms
- .text          0x00400dec      0x144 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
-                0x00400e64                LedCtrl_Configure
-                0x00400eb8                LedCtrl_BlinkingPattern
- .text          0x00400f30       0x6c C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
-                0x00400f30                Dummy_Handler
+                0x004001e4                limpiar
+                0x004001fc                main
+ .text          0x004002ec      0x718 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
+                0x004003c0                PMC_EnablePeripheral
+                0x00400434                PMC_DisablePeripheral
+                0x004004a8                PMC_EnableAllPeripherals
+                0x004004e8                PMC_DisableAllPeripherals
+                0x00400524                PMC_IsPeriphEnabled
+                0x00400564                PMC_EnableExtOsc
+                0x004005e0                PMC_DisableExtOsc
+                0x0040061c                PMC_SelectExtOsc
+                0x00400688                PMC_SelectExtBypassOsc
+                0x004006f4                PMC_EnableIntRC4_8_12MHz
+                0x00400780                PMC_DisableIntRC4_8_12MHz
+                0x004007c4                PMC_SetPllaClock
+                0x0040081c                PMC_SetMckSelection
+                0x00400860                PMC_DisableAllClocks
+                0x004008b0                PMC_ConfigureMckWithPlla
+                0x004008e8                PMC_EnableXT32KFME
+                0x00400914                PMC_ConfigurePCK0
+                0x00400964                PMC_ConfigurePCK1
+                0x004009b4                PMC_ConfigurePCK2
+ .text          0x00400a04      0x524 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
+                0x00400a9c                cuenta
+                0x00400ab8                SchM_Callback
+                0x00400b8c                SysTick_init
+                0x00400bc0                SchM_Start
+                0x00400bec                SchM_Scheduler
+                0x00400d30                SchM_Init
+                0x00400e94                SchM_Stop
+                0x00400eac                SysTick_Handler
+                0x00400ec8                SchM_SchedulePoint
+                0x00400f04                SchM_ActivateTask
+ .text          0x00400f28      0x1b8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
+                0x00400f28                SchM_Task_1ms
+                0x00400f64                SchM_Task_2ms_A
+                0x00400fa8                SchM_Task_2ms_B
+                0x00400fec                SchM_Task_10ms
+                0x00401030                SchM_Task_50ms
+                0x00401074                SchM_Task_100ms
+                0x004010bc                SchM_Task_Event
+ .text          0x004010e0      0x144 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
+                0x00401158                LedCtrl_Configure
+                0x004011ac                LedCtrl_BlinkingPattern
+ .text          0x00401224       0x6c C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
+                0x00401224                Dummy_Handler
  *(.rodata)
-                0x00400f9c                . = ALIGN (0x4)
-                0x00400f9c                _efixed = .
+                0x00401290                . = ALIGN (0x4)
+                0x00401290                _efixed = .
 
-.glue_7         0x00400f9c        0x0
+.glue_7         0x00401290        0x0
  .glue_7        0x00000000        0x0 linker stubs
 
-.glue_7t        0x00400f9c        0x0
+.glue_7t        0x00401290        0x0
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x00400f9c        0x0
+.vfp11_veneer   0x00401290        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x00400f9c        0x0
+.v4_bx          0x00401290        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x00400f9c        0x0
+.iplt           0x00401290        0x0
  .iplt          0x00000000        0x0 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
 
-.igot.plt       0x00400f9c        0x0
+.igot.plt       0x00401290        0x0
  .igot.plt      0x00000000        0x0 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
 
-.rel.dyn        0x00400f9c        0x0
+.rel.dyn        0x00401290        0x0
  .rel.iplt      0x00000000        0x0 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
-                0x00400f9c                . = ALIGN (0x4)
-                0x00400f9c                _etext = .
+                0x00401290                . = ALIGN (0x4)
+                0x00401290                _etext = .
 
-.relocate       0x20400000        0x0 load address 0x00400f9c
+.relocate       0x20400000        0x0 load address 0x00401290
                 0x20400000                . = ALIGN (0x4)
                 0x20400000                _srelocate = .
  *(.ramfunc .ramfunc.*)
@@ -435,7 +437,7 @@ LOAD C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\C
                 0x20400000                . = ALIGN (0x4)
                 0x20400000                _erelocate = .
 
-.bss            0x20400000       0x24
+.bss            0x20400000       0x64
                 0x20400000                . = ALIGN (0x4)
                 0x20400000                _sbss = .
                 0x20400000                _szero = .
@@ -445,66 +447,66 @@ LOAD C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\C
  .bss           0x20400004        0x8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
                 0x20400004                pfctnSysTick
                 0x20400008                contador
- .bss           0x2040000c        0x4 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
+ .bss           0x2040000c        0x8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
                 0x2040000c                contadortiempo
- .bss           0x20400010        0x1 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
+                0x20400010                seejecuto
+ .bss           0x20400014        0x1 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
  *(COMMON)
- *fill*         0x20400011        0x3 
- COMMON         0x20400014        0x8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
-                0x20400014                Dummy
-                0x20400018                Register
- COMMON         0x2040001c        0x8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
-                0x2040001c                SchM_Task_ID_Backup
-                0x2040001d                SchM_Task_ID_Activated
-                0x2040001e                SchM_Counter
-                0x2040001f                SchM_10ms_Counter
-                0x20400020                SchM_Status
-                0x20400021                SchM_Task_ID_Running
-                0x20400022                SchM_50ms_Counter
-                0x20400023                SchM_100ms_Counter
-                0x20400024                . = ALIGN (0x4)
-                0x20400024                _ebss = .
-                0x20400024                _ezero = .
+ *fill*         0x20400015        0x3 
+ COMMON         0x20400018        0x8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
+                0x20400018                Dummy
+                0x2040001c                Register
+ COMMON         0x20400020       0x44 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
+                0x20400020                SchM_Task_ID_Backup
+                0x20400021                SchM_Task_ID_Activated
+                0x20400022                SchM_Counter
+                0x20400023                SchM_Status
+                0x20400024                SchM_Task_ID_Running
+                0x20400028                RunningTaskPriority
+                0x2040002c                tarea
+                0x20400064                . = ALIGN (0x4)
+                0x20400064                _ebss = .
+                0x20400064                _ezero = .
 
-.stack          0x20400024     0x1004
-                0x20400028                . = ALIGN (0x8)
- *fill*         0x20400024        0x4 
-                0x20400028                _sstack = .
-                0x20401028                . = (. + STACK_SIZE)
- *fill*         0x20400028     0x1000 
-                0x20401028                . = ALIGN (0x8)
-                0x20401028                _estack = .
+.stack          0x20400064     0x1004
+                0x20400068                . = ALIGN (0x8)
+ *fill*         0x20400064        0x4 
+                0x20400068                _sstack = .
+                0x20401068                . = (. + STACK_SIZE)
+ *fill*         0x20400068     0x1000 
+                0x20401068                . = ALIGN (0x8)
+                0x20401068                _estack = .
 
-.heap           0x20401028     0x1000
-                0x20401028                . = ALIGN (0x8)
-                0x20401028                _sheap = .
-                0x20402028                . = (. + HEAP_SIZE)
- *fill*         0x20401028     0x1000 
-                0x20402028                . = ALIGN (0x8)
-                0x20402028                _eheap = .
-                0x20402028                . = ALIGN (0x4)
-                0x20402028                _end = .
+.heap           0x20401068     0x1000
+                0x20401068                . = ALIGN (0x8)
+                0x20401068                _sheap = .
+                0x20402068                . = (. + HEAP_SIZE)
+ *fill*         0x20401068     0x1000 
+                0x20402068                . = ALIGN (0x8)
+                0x20402068                _eheap = .
+                0x20402068                . = ALIGN (0x4)
+                0x20402068                _end = .
                 0x2041ffff                _ram_end_ = ((ORIGIN (ram) + 0x20000) - 0x1)
 LOAD c:/isystem/winidea9/gcc/arm/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a
 LOAD c:/isystem/winidea9/gcc/arm/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a
 LOAD c:/isystem/winidea9/gcc/arm/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a
 OUTPUT(03_Timers_Solved.elf elf32-littlearm)
 
-.debug_info     0x00000000     0x2245
- .debug_info    0x00000000      0x54b C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
- .debug_info    0x0000054b      0x6b8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
- .debug_info    0x00000c03      0x9c1 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
- .debug_info    0x000015c4      0x137 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
- .debug_info    0x000016fb      0x60e C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
- .debug_info    0x00001d09      0x53c C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
+.debug_info     0x00000000     0x24f9
+ .debug_info    0x00000000      0x562 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
+ .debug_info    0x00000562      0x6b8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
+ .debug_info    0x00000c1a      0xa7a C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
+ .debug_info    0x00001694      0x31b C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
+ .debug_info    0x000019af      0x60e C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
+ .debug_info    0x00001fbd      0x53c C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
 
-.debug_abbrev   0x00000000      0x85e
- .debug_abbrev  0x00000000      0x19e C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
- .debug_abbrev  0x0000019e      0x1bb C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
- .debug_abbrev  0x00000359      0x240 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
- .debug_abbrev  0x00000599       0xc5 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
- .debug_abbrev  0x0000065e      0x10b C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
- .debug_abbrev  0x00000769       0xf5 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
+.debug_abbrev   0x00000000      0x8c9
+ .debug_abbrev  0x00000000      0x1b6 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
+ .debug_abbrev  0x000001b6      0x1bb C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
+ .debug_abbrev  0x00000371      0x246 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
+ .debug_abbrev  0x000005b7      0x112 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
+ .debug_abbrev  0x000006c9      0x10b C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
+ .debug_abbrev  0x000007d4       0xf5 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
 
 .debug_aranges  0x00000000       0xc0
  .debug_aranges
@@ -520,7 +522,7 @@ OUTPUT(03_Timers_Solved.elf elf32-littlearm)
  .debug_aranges
                 0x000000a0       0x20 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
 
-.debug_macro    0x00000000     0x8289
+.debug_macro    0x00000000     0x8293
  .debug_macro   0x00000000      0xb1c C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
  .debug_macro   0x00000b1c      0x1f4 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
  .debug_macro   0x00000d10       0x22 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
@@ -556,31 +558,31 @@ OUTPUT(03_Timers_Solved.elf elf32-littlearm)
  .debug_macro   0x000044e0       0x34 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
  .debug_macro   0x00004514      0xb34 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
  .debug_macro   0x00005048      0x1f4 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
- .debug_macro   0x0000523c      0xafa C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
- .debug_macro   0x00005d36      0xb48 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
- .debug_macro   0x0000687e     0x1028 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
- .debug_macro   0x000078a6      0x9e3 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
+ .debug_macro   0x0000523c      0xb04 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
+ .debug_macro   0x00005d40      0xb48 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
+ .debug_macro   0x00006888     0x1028 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
+ .debug_macro   0x000078b0      0x9e3 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
 
-.debug_line     0x00000000     0x1680
- .debug_line    0x00000000      0x44c C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
- .debug_line    0x0000044c      0x3b8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
- .debug_line    0x00000804      0x432 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
- .debug_line    0x00000c36      0x3e5 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
- .debug_line    0x0000101b      0x447 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
- .debug_line    0x00001462      0x21e C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
+.debug_line     0x00000000     0x172f
+ .debug_line    0x00000000      0x452 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
+ .debug_line    0x00000452      0x3b8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
+ .debug_line    0x0000080a      0x461 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
+ .debug_line    0x00000c6b      0x45f C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
+ .debug_line    0x000010ca      0x447 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
+ .debug_line    0x00001511      0x21e C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
 
-.debug_str      0x00000000    0x22d80
- .debug_str     0x00000000     0xc80b C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
-                               0xca16 (size before relaxing)
- .debug_str     0x0000c80b     0x50da C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
+.debug_str      0x00000000    0x22dfa
+ .debug_str     0x00000000     0xc815 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
+                               0xca2d (size before relaxing)
+ .debug_str     0x0000c815     0x50da C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
                                0x81de (size before relaxing)
- .debug_str     0x000118e5      0x468 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
-                               0xcd3d (size before relaxing)
- .debug_str     0x00011d4d       0xba C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
-                               0xc59f (size before relaxing)
- .debug_str     0x00011e07    0x1098d C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
+ .debug_str     0x000118ef      0x4be C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
+                               0xcdd1 (size before relaxing)
+ .debug_str     0x00011dad       0xd4 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
+                               0xc701 (size before relaxing)
+ .debug_str     0x00011e81    0x1098d C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
                               0x21b0e (size before relaxing)
- .debug_str     0x00022794      0x5ec C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
+ .debug_str     0x0002280e      0x5ec C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
                                0x9a81 (size before relaxing)
 
 .comment        0x00000000       0x70
@@ -607,10 +609,10 @@ OUTPUT(03_Timers_Solved.elf elf32-littlearm)
  .ARM.attributes
                 0x00000113       0x37 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
 
-.debug_frame    0x00000000      0x75c
- .debug_frame   0x00000000       0xa8 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
- .debug_frame   0x000000a8      0x368 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
- .debug_frame   0x00000410      0x198 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
- .debug_frame   0x000005a8       0xd4 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
- .debug_frame   0x0000067c       0x98 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
- .debug_frame   0x00000714       0x48 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
+.debug_frame    0x00000000      0x7a8
+ .debug_frame   0x00000000       0xc4 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Main.o
+ .debug_frame   0x000000c4      0x368 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\pmc.o
+ .debug_frame   0x0000042c      0x194 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM.o
+ .debug_frame   0x000005c0      0x108 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\SchM_Tasks.o
+ .debug_frame   0x000006c8       0x98 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Led_Ctrl.o
+ .debug_frame   0x00000760       0x48 C:\VScodeworkspace\04_SchedulerBase\04_SchedulerBase\WinIdeaProject\Debug\Cstartup.o
