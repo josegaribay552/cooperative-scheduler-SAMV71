@@ -37,20 +37,20 @@ int seejecuto=0;
 /*****************************************************************************************************
 * Definition of module wide (CONST-) CONSTANTs 
 *****************************************************************************************************/
-    extern void SchM_SchedulePoint(void);
+ extern void SchM_SchedulePoint(void);
 /*****************************************************************************************************
 * Code of module wide FUNCTIONS
 *****************************************************************************************************/
 
 /* List of tasks to be executed @ 1ms */
 void SchM_Task_1ms( void )
-{  
+{          contadortiempo=0;
 	    for(int i=0;i<60;i++)
      {
         contadortiempo++;   //incrementar el contador para ver cuantas operaciones realiza en 500 us
      }
      SchM_SchedulePoint();                             //y de ahi dividir varios schedule point
-     tarea[6].TaskState=SUSPENDED;
+    // tarea[6].TaskState=SUSPENDED;
  
 }
 
@@ -63,7 +63,7 @@ void SchM_Task_2ms_A(void)
         contadortiempo++;   //incrementar el contador para ver cuantas operaciones realiza en 500 us
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+    // tarea[6].TaskState=SUSPENDED;
 	
 }
 
@@ -75,7 +75,7 @@ void SchM_Task_2ms_B( void )
         contadortiempo++;   //incrementar el contador para ver cuantas operaciones realiza en 500 us
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+  //   tarea[6].TaskState=SUSPENDED;
 	
 }
     
@@ -87,7 +87,7 @@ void SchM_Task_10ms( void )
         contadortiempo++;   //incrementar el contador para ver cuantas operaciones realiza en 500 us
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+   //  tarea[6].TaskState=SUSPENDED;
   
   //LedCtrl_BlinkingPattern();
 }
@@ -102,29 +102,30 @@ void SchM_Task_50ms( void )
         contadortiempo++;   //incrementar el contador para ver cuantas operaciones realiza en 500 us
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+   //  tarea[6].TaskState=SUSPENDED;
 }
 
 /* List of tasks to be executed @ 100ms */
 void SchM_Task_100ms( void )
 { 
    contadortiempo=0;
-    LedCtrl_BlinkingPattern();
+   // LedCtrl_BlinkingPattern();
    	    for(int i=0;i<60;i++)
      {
         contadortiempo++;   //incrementar el contador para ver cuantas operaciones realiza en 500 us
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+   //  tarea[6].TaskState=SUSPENDED;
 }
 
 /* List of tasks to be executed by External Interrupt */
 void SchM_Task_Event( void )
 { 
-   contadortiempo=0;
    
+       LedCtrl_BlinkingPattern();
   
-    seejecuto+=1;
+    seejecuto++;
+       
 }
 
 

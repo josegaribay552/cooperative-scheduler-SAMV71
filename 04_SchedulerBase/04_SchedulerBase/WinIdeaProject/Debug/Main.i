@@ -5340,6 +5340,7 @@ unsigned int *Register;
 #define PIO_A_ADDRESS (0x400E0E00)
 
 void limpiar (void);
+extern void SchM_ActivateTask(void);
 
 extern void ImSR()
 {
@@ -5362,7 +5363,7 @@ extern void ImSR()
 
 }
 
-void limpiar ()
+void limpiar (void)
 {
     ISR_COUNTER=1;
 }

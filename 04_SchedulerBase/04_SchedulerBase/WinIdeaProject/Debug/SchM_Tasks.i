@@ -5341,20 +5341,20 @@ int seejecuto=0;
 
 
 
-    extern void SchM_SchedulePoint(void);
+ extern void SchM_SchedulePoint(void);
 
 
 
 
 
 void SchM_Task_1ms( void )
-{
+{ contadortiempo=0;
      for(int i=0;i<60;i++)
      {
         contadortiempo++;
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+
 
 }
 
@@ -5367,7 +5367,7 @@ void SchM_Task_2ms_A(void)
         contadortiempo++;
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+
 
 }
 
@@ -5379,7 +5379,7 @@ void SchM_Task_2ms_B( void )
         contadortiempo++;
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+
 
 }
 
@@ -5391,7 +5391,7 @@ void SchM_Task_10ms( void )
         contadortiempo++;
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+
 
 
 }
@@ -5406,27 +5406,28 @@ void SchM_Task_50ms( void )
         contadortiempo++;
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+
 }
 
 
 void SchM_Task_100ms( void )
 {
    contadortiempo=0;
-    LedCtrl_BlinkingPattern();
+
         for(int i=0;i<60;i++)
      {
         contadortiempo++;
      }
      SchM_SchedulePoint();
-     tarea[6].TaskState=SUSPENDED;
+
 }
 
 
 void SchM_Task_Event( void )
 {
-   contadortiempo=0;
 
+       LedCtrl_BlinkingPattern();
 
-    seejecuto+=1;
+    seejecuto++;
+
 }

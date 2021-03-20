@@ -128,7 +128,7 @@ ISR_COUNTER:
 ImSR:
 .LFB124:
 	.file 2 "C:\\VScodeworkspace\\04_SchedulerBase\\04_SchedulerBase\\src\\Application\\Main.c"
-	.loc 2 55 0
+	.loc 2 56 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -140,31 +140,31 @@ ImSR:
 	.cfi_def_cfa_offset 16
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 58 0
+	.loc 2 59 0
 	ldr	r3, .L9
 	str	r3, [r7, #4]
-	.loc 2 60 0
+	.loc 2 61 0
 	ldr	r3, [r7, #4]
 	ldr	r3, [r3]
 	ldr	r2, .L9+4
 	str	r3, [r2]
-	.loc 2 62 0
+	.loc 2 63 0
 	ldr	r3, .L9+8
 	ldr	r3, [r3]
 	adds	r3, r3, #1
 	ldr	r2, .L9+8
 	str	r3, [r2]
-	.loc 2 64 0
+	.loc 2 65 0
 	ldr	r3, .L9+8
 	ldr	r3, [r3]
 	cmp	r3, #2
 	bne	.L7
-	.loc 2 67 0
-	bl	limpiar
 	.loc 2 68 0
+	bl	limpiar
+	.loc 2 69 0
 	bl	SchM_ActivateTask
 .L7:
-	.loc 2 73 0
+	.loc 2 74 0
 	adds	r7, r7, #8
 	.cfi_def_cfa_offset 8
 	mov	sp, r7
@@ -187,7 +187,7 @@ ImSR:
 	.type	limpiar, %function
 limpiar:
 .LFB125:
-	.loc 2 76 0
+	.loc 2 77 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -197,11 +197,11 @@ limpiar:
 	.cfi_offset 7, -4
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 77 0
+	.loc 2 78 0
 	ldr	r3, .L12
 	movs	r2, #1
 	str	r2, [r3]
-	.loc 2 78 0
+	.loc 2 79 0
 	mov	sp, r7
 	.cfi_def_cfa_register 13
 	@ sp needed
@@ -223,7 +223,7 @@ limpiar:
 	.type	main, %function
 main:
 .LFB126:
-	.loc 2 84 0
+	.loc 2 85 0
 	.cfi_startproc
 	@ args = 0, pretend = 0, frame = 56
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -235,17 +235,17 @@ main:
 	.cfi_def_cfa_offset 64
 	add	r7, sp, #0
 	.cfi_def_cfa_register 7
-	.loc 2 86 0
+	.loc 2 87 0
 	ldr	r2, .L16
 	ldr	r3, .L16
 	ldr	r3, [r3]
 	orr	r3, r3, #32768
 	str	r3, [r2]
-	.loc 2 90 0
+	.loc 2 91 0
 	ldr	r3, .L16+4
 	ldr	r2, .L16+8
 	str	r2, [r3]
-	.loc 2 92 0
+	.loc 2 93 0
 	ldr	r3, .L16+4
 	ldr	r3, [r3]
 	ldr	r2, .L16+4
@@ -253,75 +253,75 @@ main:
 	ldr	r2, [r2]
 	orr	r2, r2, #1024
 	str	r2, [r3]
-	.loc 2 95 0
+	.loc 2 96 0
 	ldr	r3, .L16+4
 	ldr	r2, .L16+12
 	str	r2, [r3]
-	.loc 2 96 0
+	.loc 2 97 0
 	ldr	r3, .L16+4
 	ldr	r3, [r3]
 	ldr	r2, .L16+4
 	ldr	r2, [r2]
 	ldr	r2, [r2]
 	orr	r2, r2, #512
-	str	r2, [r3]
-	.loc 2 99 0
-	ldr	r3, .L16+4
-	ldr	r2, .L16+16
 	str	r2, [r3]
 	.loc 2 100 0
 	ldr	r3, .L16+4
+	ldr	r2, .L16+16
+	str	r2, [r3]
+	.loc 2 101 0
+	ldr	r3, .L16+4
 	ldr	r3, [r3]
 	ldr	r2, .L16+4
 	ldr	r2, [r2]
 	ldr	r2, [r2]
 	orr	r2, r2, #512
-	str	r2, [r3]
-	.loc 2 103 0
-	ldr	r3, .L16+4
-	ldr	r2, .L16+20
 	str	r2, [r3]
 	.loc 2 104 0
 	ldr	r3, .L16+4
+	ldr	r2, .L16+20
+	str	r2, [r3]
+	.loc 2 105 0
+	ldr	r3, .L16+4
 	ldr	r3, [r3]
 	ldr	r2, .L16+4
 	ldr	r2, [r2]
 	ldr	r2, [r2]
 	orr	r2, r2, #512
 	str	r2, [r3]
-	.loc 2 107 0
+	.loc 2 108 0
 	ldr	r2, .L16+24
 	ldr	r3, .L16+24
 	ldr	r3, [r3]
 	orr	r3, r3, #512
 	str	r3, [r2]
-	.loc 2 108 0
+	.loc 2 109 0
 	ldr	r2, .L16+28
 	ldr	r3, .L16+28
 	ldr	r3, [r3]
 	orr	r3, r3, #512
 	str	r3, [r2]
-	.loc 2 109 0
+	.loc 2 110 0
 	ldr	r2, .L16+32
 	ldr	r3, .L16+32
 	ldr	r3, [r3]
 	orr	r3, r3, #512
 	str	r3, [r2]
-	.loc 2 110 0
+	.loc 2 111 0
 	ldr	r2, .L16+36
 	ldr	r3, .L16+36
 	ldr	r3, [r3]
 	orr	r3, r3, #512
 	str	r3, [r2]
-	.loc 2 111 0
+	.loc 2 112 0
 	ldr	r2, .L16+40
 	ldr	r3, .L16+40
 	ldr	r3, [r3]
 	orr	r3, r3, #512
 	str	r3, [r2]
-	.loc 2 113 0
+	.loc 2 114 0
 	bl	LedCtrl_Configure
-	.loc 2 116 0
+	.loc 2 117 0
 	movs	r0, #10
 	bl	NVIC_ClearPendingIRQ
 .LBB4:
@@ -334,15 +334,15 @@ main:
 	.thumb
 .LBE5:
 .LBE4:
-	.loc 2 120 0
+	.loc 2 121 0
 	movs	r0, #10
 	bl	NVIC_EnableIRQ
-	.loc 2 126 0
+	.loc 2 127 0
 	mov	r3, r7
 	mov	r0, r3
 	bl	SchM_Init
 .L15:
-	.loc 2 131 0 discriminator 1
+	.loc 2 132 0 discriminator 1
 	b	.L15
 .L17:
 	.align	2
@@ -936,7 +936,7 @@ main:
 	.uleb128 0x18
 	.4byte	.LASF1663
 	.byte	0x2
-	.byte	0x36
+	.byte	0x37
 	.4byte	.LFB124
 	.4byte	.LFE124-.LFB124
 	.uleb128 0x1
@@ -945,7 +945,7 @@ main:
 	.uleb128 0x19
 	.4byte	.LASF1654
 	.byte	0x2
-	.byte	0x39
+	.byte	0x3a
 	.4byte	0x4bf
 	.uleb128 0x2
 	.byte	0x91
@@ -957,7 +957,7 @@ main:
 	.uleb128 0x1a
 	.4byte	.LASF1664
 	.byte	0x2
-	.byte	0x4b
+	.byte	0x4c
 	.4byte	.LFB125
 	.4byte	.LFE125-.LFB125
 	.uleb128 0x1
@@ -965,7 +965,7 @@ main:
 	.uleb128 0x1b
 	.4byte	.LASF1665
 	.byte	0x2
-	.byte	0x53
+	.byte	0x54
 	.4byte	0x23f
 	.4byte	.LFB126
 	.4byte	.LFE126-.LFB126
@@ -975,7 +975,7 @@ main:
 	.uleb128 0x19
 	.4byte	.LASF1655
 	.byte	0x2
-	.byte	0x7a
+	.byte	0x7b
 	.4byte	0x50d
 	.uleb128 0x2
 	.byte	0x91
@@ -985,7 +985,7 @@ main:
 	.4byte	.LBB4
 	.4byte	.LBE4-.LBB4
 	.byte	0x2
-	.byte	0x76
+	.byte	0x77
 	.byte	0
 	.uleb128 0xd
 	.4byte	0x43b

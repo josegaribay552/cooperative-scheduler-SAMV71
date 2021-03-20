@@ -49,10 +49,12 @@ uint8_t SchM_Status;
 
 uint8_t SchM_Counter;
 
+unsigned int flag=0;
+
 
 SchMTaskCtrltype tarea[7];  //definicion de tipo de dato para scheduler
 extern SchMTaskType TaskArray[7]; //definicion externa de las tareas
-int RunningTaskPriority; //guarda el valor de la prioridad de la trarea en ejecucion
+unsigned int RunningTaskPriority; //guarda el valor de la prioridad de la trarea en ejecucion
 
 
 SchMTasksIdType SchM_Task_ID_Activated;
@@ -394,7 +396,7 @@ void SchM_Init(SchMTaskType *TaskArray)
     tarea[3].TaskInfo=&TaskArray[3];  //inicializacion de apuntador a tarea de 10ms
     tarea[4].TaskInfo=&TaskArray[4];  //inicializacion de apuntador a tarea de 50ms
     tarea[5].TaskInfo=&TaskArray[5];  //inicializacion de apuntador a tarea de 100ms
-
+    tarea[6].TaskInfo=&TaskArray[6];
    //tarea[0].TaskInfo->TaskFncPtr();
    
 
@@ -424,7 +426,7 @@ void SchM_Init(SchMTaskType *TaskArray)
     TaskArray[5].TaskId=TASKS_100_MS;
     TaskArray[5].TaskFncPtr=&SchM_Task_100ms;
 
-    TaskArray[6].TaskPriority=5;                    //TAREA QUE SE VA A ACTIVAR POR EVENTO
+    TaskArray[6].TaskPriority=3;                    //TAREA QUE SE VA A ACTIVAR POR EVENTO
     TaskArray[6].TaskId=TASKS_EVENT_MS;
     TaskArray[6].TaskFncPtr=&SchM_Task_Event;
 
@@ -482,7 +484,8 @@ void SysTick_Handler(void)
 void SchM_SchedulePoint (void)
 {
       //si la tarea que esta corriendo es de menor prioridad a la que esta en ready por evento dejar la tarea corriendo en suspend
-      if((tarea[6].TaskState==READY) && (tarea[6].TaskInfo[6].TaskPriority >  RunningTaskPriority))
+      //((tarea[6].TaskState==READY) && (tarea[6].TaskInfo->TaskPriority >  RunningTaskPriority))
+      if(tarea[6].TaskState==READY && (tarea[6].TaskInfo->TaskPriority >  RunningTaskPriority)) 
       {
           tarea[6].TaskState=RUNNING;            //SE LE CAMBIA EL ESTADO A LA TAREA POR EVENTO
           tarea[6].TaskInfo->TaskFncPtr();   //ejecuta la tarea por evento
@@ -505,7 +508,7 @@ void SchM_SchedulePoint (void)
 /* SchM_ActivateTask*/
 void SchM_ActivateTask (void)
 {
-      if(tarea[6].TaskState==SUSPENDED)
+      flag=1;
      tarea[6].TaskState=READY;
 
  
